@@ -1,0 +1,75 @@
+html,
+body {
+  color: #ededed;
+  background-color: #151515;
+  -webkit-tap-highlight-color: transparent;
+}
+
+$header-height: 3.5rem;
+
+main {
+  position: relative;
+  margin-top: $header-height;
+  padding: 2rem min(3%, 3rem) 6rem;
+  min-height: calc(100svh - $header-height);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  h1 {
+    font-size: 200%;
+  }
+}
+
+header {
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  padding: 0.5rem min(3%, 3rem);
+  height: $header-height;
+  width: 100%;
+  color: #ffffff;
+  background-color: #232323;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  div {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  a,
+  button {
+    padding: 0 12px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+  }
+
+  form {
+    height: 100%;
+  }
+}
+
+a,
+button {
+  cursor: pointer !important;
+  transition: 0.2s background-color ease-in-out;
+
+  &:hover {
+    background-color: #2b2b2b;
+  }
+}
+
+h1 {
+  font-size: 125%;
+  font-weight: bold;
+}
