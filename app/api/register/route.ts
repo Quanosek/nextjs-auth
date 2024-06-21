@@ -1,57 +1,52 @@
 import { NextResponse } from "next/server";
-
-import { ZodError } from "zod";
-import { hash } from "bcryptjs";
-
+import { hash } from "bcrypt";
 import db from "@/lib/db";
-import { createUserSchema } from "@/lib/user-schema";
+import { registerUserSchema } from "@/lib/user-schema";
 
 export async function POST(req: Request) {
   try {
-    const { name, email, password } = createUserSchema.parse(await req.json());
+    // get request body
+    const body = await req.json();
+    const username = registerUserSchema.parse(body).username.toLowerCase();
 
-    const hashed_password = await hash(password, 12);
-
-    const user = await db.user.create({
-      data: {
-        name,
-        email: email.toLowerCase(),
-        password: hashed_password,
-      },
+    // check existing user
+    const existingUser = await db.user.findUnique({
+      where: { username },
     });
 
-    return NextResponse.json({
-      user: {
-        name: user.name,
-        email: user.email,
-      },
-    });
-  } catch (error: any) {
-    if (error instanceof ZodError) {
+    if (existingUser) {
       return NextResponse.json(
         {
-          status: "error",
-          message: "Validation failed",
-          errors: error.errors,
-        },
-        { status: 400 }
-      );
-    }
-
-    if (error.code === "P2002") {
-      return NextResponse.json(
-        {
-          status: "fail",
-          message: "user with that email already exists",
+          user: null,
+          message: "Użytkownik o podanej nazwie już istnieje",
         },
         { status: 409 }
       );
     }
 
+    // define new user without public password
+    const password = await hash(body.password, 12);
+
+    const newUser = await db.user.create({
+      data: { username, password },
+    });
+
+    const { password: _, ...user } = newUser;
+
+    // return new user data
     return NextResponse.json(
       {
-        status: "error",
-        message: error.message || "Internal Server Error",
+        user,
+        message: "Pomyślnie utworzono nowe konto",
+      },
+      { status: 201 }
+    );
+  } catch (error) {
+    // return error message
+    return NextResponse.json(
+      {
+        message: "Wystąpił nieoczekiwany błąd",
+        error,
       },
       { status: 500 }
     );

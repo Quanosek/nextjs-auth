@@ -1,14 +1,9 @@
 import Link from "next/link";
-import { auth, signOut } from "@/lib/auth";
+import { auth } from "@/lib/auth";
 
 export default async function HeaderComponent() {
   const session = await auth();
   const user = session?.user;
-
-  const logoutAction = async () => {
-    "use server";
-    await signOut();
-  };
 
   return (
     <header>
@@ -17,17 +12,10 @@ export default async function HeaderComponent() {
       <div>
         <Link href="/">Strona główna</Link>
 
-        {!user && <Link href="/login">Zaloguj się</Link>}
-
-        {user && (
-          <>
-            <Link href="/client">Klient</Link>
-            <Link href="/profile">Twoje konto</Link>
-
-            <form action={logoutAction}>
-              <button>Wyloguj się</button>
-            </form>
-          </>
+        {!user ? (
+          <Link href="/login">Zaloguj się</Link>
+        ) : (
+          <Link href="/profile">Twoje konto</Link>
         )}
       </div>
     </header>

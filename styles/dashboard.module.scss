@@ -1,0 +1,17 @@
+.userData {
+  opacity: 75%;
+  height: 50svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 85%;
+}
+
+.redButton {
+  color: #ffffff;
+  background-color: #722424;
+
+  &:hover {
+    background-color: #8d3636;
+  }
+}

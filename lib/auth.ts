@@ -1,90 +1,64 @@
 import NextAuth from "next-auth";
-
-import db from "@/lib/db";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
+import { compare } from "bcrypt";
+import db from "@/lib/db";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  session: { strategy: "jwt" },
   adapter: PrismaAdapter(db),
+  secret: process.env.AUTH_SECRET,
+  session: { strategy: "jwt" },
   pages: { signIn: "/login" },
 
   providers: [
     CredentialsProvider({
-      name: "Sign in",
-      id: "credentials",
+      name: "Credentials",
       credentials: {
-        email: {
-          label: "Email",
-          type: "email",
-          placeholder: "example@example.com",
-        },
+        username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) {
-          return null;
-        }
+        if (!credentials.username || !credentials.password) return null;
 
-        const user = await db.user.findUnique({
-          where: {
-            email: String(credentials.email),
-          },
+        // Check if the user exists and the password is correct
+        const existingUser = await db.user.findUnique({
+          where: { username: credentials.username as string },
         });
+        if (!existingUser) return null;
 
-        if (
-          !user ||
-          !(await bcrypt.compare(String(credentials.password), user.password!))
-        ) {
-          return null;
-        }
+        const passwordMatch = await compare(
+          credentials.password as string,
+          existingUser.password
+        );
+        if (!passwordMatch) return null;
 
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          randomKey: "Hey cool",
-        };
+        // return the user data object
+        const { id, username } = existingUser;
+        return { id, username };
       },
     }),
   ],
 
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
-      const paths = ["/profile", "/client-side"];
-      const isProtected = paths.some((path) =>
-        nextUrl.pathname.startsWith(path)
-      );
-
-      if (isProtected && !isLoggedIn) {
-        const redirectUrl = new URL("/api/auth/signin", nextUrl.origin);
-        redirectUrl.searchParams.append("callbackUrl", nextUrl.href);
-        return Response.redirect(redirectUrl);
-      }
-      return true;
-    },
-
-    jwt: ({ token, user }) => {
+    async jwt({ token, user }: any) {
       if (user) {
-        const u = user as unknown as any;
         return {
           ...token,
-          id: u.id,
-          randomKey: u.randomKey,
+          id: user.id,
+          username: user.username,
         };
       }
       return token;
     },
 
-    session(params) {
+    async session({ session, token }) {
       return {
-        ...params.session,
+        ...session,
         user: {
-          ...params.session.user,
-          id: params.token.id as string,
-          randomKey: params.token.randomKey,
+          ...session.user,
+          id: token.id as string,
+          username: token.username,
         },
       };
     },

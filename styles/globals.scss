@@ -19,6 +19,7 @@ main {
   gap: 1rem;
 
   h1 {
+    margin: 5px 0 10px;
     font-size: 200%;
   }
 }
@@ -45,13 +46,17 @@ header {
     align-items: center;
   }
 
-  a,
-  button {
+  a {
     padding: 0 12px;
     height: 100%;
     display: flex;
     align-items: center;
     border-radius: 4px;
+    transition: 0.2s background-color ease-in-out;
+
+    &:hover {
+      background-color: #2b2b2b;
+    }
   }
 
   form {
@@ -62,6 +67,12 @@ header {
 a,
 button {
   cursor: pointer !important;
+}
+
+button {
+  padding: 10px 24px;
+  border-radius: 4px;
+  background-color: #232323;
   transition: 0.2s background-color ease-in-out;
 
   &:hover {

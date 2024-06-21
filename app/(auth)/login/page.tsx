@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import LoginForm from "@/components/forms/login";
 
 import styles from "@/styles/auth.module.scss";
-
-import LoginForm from "@/components/forms/login";
 
 export default function LoginPage() {
   return (

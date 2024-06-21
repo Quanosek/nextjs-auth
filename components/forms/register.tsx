@@ -1,21 +1,19 @@
 "use client";
 
 import { useState } from "react";
-
 import { signIn } from "next-auth/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
+import { RegisterUserInput, registerUserSchema } from "@/lib/user-schema";
 
 import styles from "@/styles/forms.module.scss";
 
-import { CreateUserInput, createUserSchema } from "@/lib/user-schema";
-
 export default function RegisterForm() {
-  const [submitting, setSubmitting] = useState(false);
+  const [submitting, setSubmitting] = useState(false); // loading state
 
-  const methods = useForm<CreateUserInput>({
-    resolver: zodResolver(createUserSchema),
+  const methods = useForm<RegisterUserInput>({
+    resolver: zodResolver(registerUserSchema),
   });
 
   const {
@@ -24,36 +22,36 @@ export default function RegisterForm() {
     formState: { errors },
   } = methods;
 
-  const onSubmitHandler: SubmitHandler<CreateUserInput> = async (values) => {
+  const onSubmitHandler: SubmitHandler<RegisterUserInput> = async (values) => {
     try {
       setSubmitting(true);
 
       const res = await fetch("/api/register", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
 
       if (!res.ok) {
+        // handle custom errors
         const errorData = await res.json();
 
         if (Array.isArray(errorData.errors) && errorData.errors.length > 0) {
-          errorData.errors.forEach((error: any) => {
-            toast.error(error.message);
+          return errorData.errors.forEach((error: ErrorEvent) => {
+            return toast.error(error.message);
           });
-
-          return;
         }
 
         toast.error(errorData.message);
-        return;
+      } else {
+        // redirect to login page
+        signIn(undefined, {
+          redirect: true,
+          callbackUrl: "/login",
+        });
       }
-
-      signIn(undefined, { callbackUrl: "/" });
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (error) {
+      toast.error("Wystąpił nieoczekiwany błąd");
     } finally {
       setSubmitting(false);
     }
@@ -65,34 +63,22 @@ export default function RegisterForm() {
       onSubmit={handleSubmit(onSubmitHandler)}
     >
       <label>
-        <p>Nazwa użytkownika:</p>
-        <input {...register("name")} />
-
-        {errors["name"] && <span>{errors["name"]?.message as string}</span>}
-      </label>
-
-      <label>
-        <p>E-mail:</p>
-        <input type="email" {...register("email")} />
-
-        {errors["email"] && <span>{errors["email"]?.message as string}</span>}
+        <p>Login:</p>
+        <input type="text" {...register("username")} />
+        {errors["username"] && <span>{errors["username"]?.message}</span>}
       </label>
 
       <label>
         <p>Hasło:</p>
         <input type="password" {...register("password")} />
-
-        {errors["password"] && (
-          <span>{errors["password"]?.message as string}</span>
-        )}
+        {errors["password"] && <span>{errors["password"]?.message}</span>}
       </label>
 
       <label>
-        <p>Powtórz hasło:</p>
+        <p>Potwierdź hasło:</p>
         <input type="password" {...register("passwordConfirm")} />
-
         {errors["passwordConfirm"] && (
-          <span>{errors["passwordConfirm"]?.message as string}</span>
+          <span>{errors["passwordConfirm"]?.message}</span>
         )}
       </label>
 
