@@ -1,3 +1,5 @@
+$input-height: 2.5rem;
+
 .formLayout {
   padding: 2rem;
   width: 25rem;
@@ -24,7 +26,8 @@
   $elem-color: #333333;
 
   input {
-    padding: 8px;
+    padding: 8px 10px;
+    height: 2.5rem;
     color: #ffffff;
     background-color: $elem-color;
     border: 1px solid $elem-color;
@@ -41,6 +44,31 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+
+.passwordInput {
+  width: 100%;
+  height: $input-height;
+  display: flex;
+  align-items: center;
+  background-color: #333333;
+  border-radius: 4px;
+
+  input {
+    width: 100%;
+  }
+
+  .eyeIcon {
+    margin: 0;
+    padding: 5px;
+    height: 100%;
+    aspect-ratio: 1/1;
+    background-color: transparent;
+
+    img {
+      opacity: 80%;
+    }
   }
 }
 

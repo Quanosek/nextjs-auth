@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { RegisterUserInput, registerUserSchema } from "@/lib/user-schema";
+import PasswordInput from "@/components/forms/passwordInput";
 
 import styles from "@/styles/forms.module.scss";
 
@@ -90,13 +91,13 @@ export default function RegisterForm() {
 
       <label>
         <p>Hasło:</p>
-        <input type="password" {...register("password")} />
+        <PasswordInput register={register} value="password" />
         {errors["password"] && <span>{errors["password"].message}</span>}
       </label>
 
       <label>
         <p>Potwierdź hasło:</p>
-        <input type="password" {...register("passwordConfirm")} />
+        <PasswordInput register={register} value="passwordConfirm" />
         {errors["passwordConfirm"] && (
           <span>{errors["passwordConfirm"].message}</span>
         )}
