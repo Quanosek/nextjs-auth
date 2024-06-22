@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
-import { SessionProvider } from "next-auth/react";
-
+import Session from "@/components/wrappers/session";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 
@@ -22,13 +21,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pl">
       <body className={inter.className}>
-        <SessionProvider>
+        <Session>
           <Header />
           <main>{children}</main>
           <Footer />
 
           <Toaster />
-        </SessionProvider>
+        </Session>
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 import { auth } from "@/lib/auth";
+import ReCaptchaWrapper from "@/components/wrappers/reCaptcha";
 
 export default async function AuthLayout({
   children,
@@ -13,5 +14,5 @@ export default async function AuthLayout({
   // hide category from logged-IN users
   if (user) return redirect("/profile");
 
-  return <>{children}</>;
+  return <ReCaptchaWrapper>{children}</ReCaptchaWrapper>;
 }

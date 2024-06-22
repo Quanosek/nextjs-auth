@@ -18,7 +18,7 @@ export async function POST(req: Request) {
       return NextResponse.json(
         {
           user: null,
-          message: "Podany login jest zajęty!",
+          message: "Podany login jest zajęty",
         },
         { status: 409 }
       );
@@ -37,7 +37,7 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         user,
-        message: "Pomyślnie utworzono nowe konto!",
+        message: "Pomyślnie utworzono nowe konto",
       },
       { status: 201 }
     );
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
     // return error message
     return NextResponse.json(
       {
-        message: "Wystąpił nieoczekiwany błąd!",
+        message: "Wystąpił nieoczekiwany błąd",
         error,
       },
       { status: 500 }

@@ -19,8 +19,8 @@ export default async function ProfilePage() {
       <h1>Twoje konto</h1>
 
       <div className={styles.userData}>
-        <p>ID: {user?.id}</p>
-        <p>Username: @{user?.username}</p>
+        <p>ID: {user.id}</p>
+        <p>Username: @{user.username}</p>
       </div>
 
       <form action={logoutAction}>
