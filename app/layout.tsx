@@ -26,7 +26,19 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <main>{children}</main>
           <Footer />
 
-          <Toaster />
+          <Toaster
+            containerStyle={{ top: "calc(3.5rem / 2)" }}
+            toastOptions={{
+              style: {
+                background: "#232323",
+                color: "#ededed",
+              },
+              iconTheme: {
+                primary: "#ededed",
+                secondary: "#232323",
+              },
+            }}
+          />
         </Session>
       </body>
     </html>

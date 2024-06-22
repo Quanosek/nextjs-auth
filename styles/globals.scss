@@ -1,3 +1,11 @@
+:root {
+  color-scheme: dark;
+}
+
+:focus-visible {
+  box-shadow: 0 0 1px 1px #ededed;
+}
+
 html,
 body {
   color: #ededed;
@@ -99,4 +107,9 @@ button {
 h1 {
   font-size: 125%;
   font-weight: bold;
+}
+
+// hide reCaptcha badge
+.grecaptcha-badge {
+  display: none !important;
 }
