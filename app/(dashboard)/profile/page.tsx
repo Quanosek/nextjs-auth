@@ -15,7 +15,7 @@ export default async function ProfilePage() {
   };
 
   return (
-    <main>
+    <>
       <h1>Twoje konto</h1>
 
       <div className={styles.userData}>
@@ -26,6 +26,6 @@ export default async function ProfilePage() {
       <form action={logoutAction}>
         <button className={styles.redButton}>Wyloguj się</button>
       </form>
-    </main>
+    </>
   );
 }

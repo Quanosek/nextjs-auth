@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -10,8 +11,9 @@ import { LoginUserInput, loginUserSchema } from "@/lib/user-schema";
 import styles from "@/styles/forms.module.scss";
 
 export default function LoginForm() {
-  const [submitting, setSubmitting] = useState(false); // loading state
+  const router = useRouter();
 
+  const [submitting, setSubmitting] = useState(false); // loading state
   const methods = useForm<LoginUserInput>({
     resolver: zodResolver(loginUserSchema),
   });
@@ -24,14 +26,14 @@ export default function LoginForm() {
   } = methods;
 
   const onSubmitHandler: SubmitHandler<LoginUserInput> = async (values) => {
+    const { username, password } = values;
     try {
       setSubmitting(true);
 
       const res = await signIn("credentials", {
-        username: values.username,
-        password: values.password,
-        redirect: true,
-        callbackUrl: "/profile",
+        username,
+        password,
+        redirect: false,
       });
 
       setSubmitting(false);
@@ -39,9 +41,14 @@ export default function LoginForm() {
       if (res?.error) {
         reset({ password: "" });
         toast.error("Niepoprawny adres e-mail lub hasło");
+      } else {
+        // update user session
+        router.refresh();
+        toast.success(`Witaj ponownie, ${username}!`);
       }
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd");
+      console.error(error);
     } finally {
       setSubmitting(false);
     }

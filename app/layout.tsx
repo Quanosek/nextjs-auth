@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
-import Header from "@/components/header";
+
 import Provider from "@/components/provider";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 import "@/styles/globals.scss";
 import "the-new-css-reset/css/reset.css";
@@ -22,8 +24,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className={inter.className}>
         <Provider>
           <Header />
-
-          {children}
+          <main>{children}</main>
+          <Footer />
 
           <Toaster />
         </Provider>

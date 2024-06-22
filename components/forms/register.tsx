@@ -1,7 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
@@ -10,8 +10,9 @@ import { RegisterUserInput, registerUserSchema } from "@/lib/user-schema";
 import styles from "@/styles/forms.module.scss";
 
 export default function RegisterForm() {
-  const [submitting, setSubmitting] = useState(false); // loading state
+  const router = useRouter();
 
+  const [submitting, setSubmitting] = useState(false); // loading state
   const methods = useForm<RegisterUserInput>({
     resolver: zodResolver(registerUserSchema),
   });
@@ -44,14 +45,13 @@ export default function RegisterForm() {
 
         toast.error(errorData.message);
       } else {
-        // redirect to login page
-        signIn(undefined, {
-          redirect: true,
-          callbackUrl: "/login",
-        });
+        // redirect on successful registration
+        router.push("/login");
+        toast.success("Pomyślnie utworzono nowe konto");
       }
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd");
+      console.error(error);
     } finally {
       setSubmitting(false);
     }
