@@ -44,7 +44,7 @@ export default function LoginForm() {
       } else {
         // update user session
         router.refresh();
-        toast.success(`Witaj ponownie, ${username}!`);
+        toast.success(`Witaj ponownie, @${username}!`);
       }
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd");

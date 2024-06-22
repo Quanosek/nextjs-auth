@@ -20,7 +20,7 @@ export default async function ProfilePage() {
 
       <div className={styles.userData}>
         <p>ID: {user?.id}</p>
-        <p>Username: {user?.username}</p>
+        <p>Username: @{user?.username}</p>
       </div>
 
       <form action={logoutAction}>

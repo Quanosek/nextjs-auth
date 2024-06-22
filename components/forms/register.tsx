@@ -64,7 +64,15 @@ export default function RegisterForm() {
     >
       <label>
         <p>Login:</p>
-        <input type="text" {...register("username")} />
+        <input
+          type="text"
+          {...register("username", {
+            pattern: {
+              value: /^[a-zA-Z0-9]{3,30}$/,
+              message: "Login musi zawierać od 3 do 30 znaków",
+            },
+          })}
+        />
         {errors["username"] && <span>{errors["username"]?.message}</span>}
       </label>
 
