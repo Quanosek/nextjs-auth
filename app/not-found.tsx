@@ -18,12 +18,12 @@ export default function NotFoundPage() {
   }, [router, seconds]);
 
   return (
-    <>
+    <main>
       <h1>Nie znaleziono strony</h1>
 
       <button onClick={() => router.push("/")}>
         <p>Powrót na stronę główną [{seconds}]</p>
       </button>
-    </>
+    </main>
   );
 }

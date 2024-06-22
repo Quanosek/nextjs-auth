@@ -55,7 +55,7 @@ export default function RegisterForm() {
       }
 
       // registration API call
-      const registerResponse = await fetch("/api/register", {
+      const registerResponse = await fetch("/api/registerUser", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
