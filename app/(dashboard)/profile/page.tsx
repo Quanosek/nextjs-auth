@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
-import ModifyPassword from "./modifyPassword";
-import ActionButtons from "./actionButtons";
+import ChangePassword from "./changePassword";
+import OperationButtons from "./operationButtons";
 
 import styles from "@/styles/dashboard.module.scss";
 
@@ -19,10 +19,10 @@ export default async function ProfilePage() {
 
       {/* <div className={styles.changePassword}>
         <h2>Zmiana hasła</h2>
-        <ModifyPassword />
+        <ChangePassword />
       </div> */}
 
-      <ActionButtons id={user?.id} />
+      <OperationButtons id={user?.id} />
     </main>
   );
 }

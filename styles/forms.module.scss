@@ -1,8 +1,9 @@
+$form-width: 25rem;
 $input-height: 2.5rem;
 
 .formLayout {
   padding: 2rem;
-  width: 25rem;
+  width: $form-width;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -68,6 +69,7 @@ $input-height: 2.5rem;
     height: 100%;
     aspect-ratio: 1/1;
     background-color: transparent;
+    user-select: none;
 
     img {
       opacity: 80%;
@@ -90,5 +92,16 @@ $input-height: 2.5rem;
 
   &:hover {
     background-color: #2d5e37;
+  }
+}
+
+.providersButtons {
+  width: $form-width;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  button {
+    width: 100%;
   }
 }

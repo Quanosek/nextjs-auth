@@ -19,7 +19,7 @@ main {
   position: relative;
   margin-top: $header-height;
   padding: 2rem min(3%, 3rem) 4rem;
-  min-height: calc(100svh - $header-height);
+  min-height: calc(100vh - $header-height);
 
   display: flex;
   flex-direction: column;

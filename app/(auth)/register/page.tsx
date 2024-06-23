@@ -1,5 +1,5 @@
 import Link from "next/link";
-import RegisterForm from "@/components/forms/register";
+import Form from "./form";
 
 import styles from "@/styles/auth.module.scss";
 
@@ -8,7 +8,7 @@ export default function RegisterPage() {
     <main>
       <h1>Stwórz konto</h1>
 
-      <RegisterForm />
+      <Form />
 
       <p className={styles.snipped}>
         Jeśli posiadasz już konto, <Link href="/login">zaloguj się!</Link>

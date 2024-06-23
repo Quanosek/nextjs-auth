@@ -2,13 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { RegisterUserInput, registerUserSchema } from "@/lib/user-schema";
-import PasswordInput from "./passwordInput";
+import PasswordInput from "@/components/passwordInput";
 
 import styles from "@/styles/forms.module.scss";
 
@@ -22,6 +23,7 @@ export default function RegisterForm() {
   });
 
   const {
+    reset,
     handleSubmit,
     register,
     formState: { errors },
@@ -37,16 +39,9 @@ export default function RegisterForm() {
 
       // reCAPTCHA verification
       const reCaptchaToken = await executeRecaptcha("register");
-      const reCaptchaResponse = await axios.post(
-        "/api/reCaptcha",
-        { reCaptchaToken },
-        {
-          headers: {
-            Accept: "application/json text/plain */*",
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const reCaptchaResponse = await axios.post("/api/reCaptcha", {
+        reCaptchaToken,
+      });
 
       console.log("reCaptcha score:", reCaptchaResponse.data.score);
 
@@ -65,6 +60,7 @@ export default function RegisterForm() {
         toast.success("Pomyślnie utworzono nowe konto");
         router.push("/login");
       } else {
+        reset({ passwordConfirm: "" });
         const errorData = await registerResponse.json();
         toast.error(errorData.message);
       }
@@ -77,37 +73,49 @@ export default function RegisterForm() {
   };
 
   return (
-    <form
-      className={styles.formLayout}
-      onSubmit={handleSubmit(onSubmitHandler)}
-    >
-      <label>
-        <p>Login:</p>
-        <input type="text" {...register("username")} />
-        {errors["username"] && <span>{errors["username"].message}</span>}
-      </label>
-
-      <label>
-        <p>Hasło:</p>
-        <PasswordInput register={register} value="password" />
-        {errors["password"] && <span>{errors["password"].message}</span>}
-      </label>
-
-      <label>
-        <p>Potwierdź hasło:</p>
-        <PasswordInput register={register} value="passwordConfirm" />
-        {errors["passwordConfirm"] && (
-          <span>{errors["passwordConfirm"].message}</span>
-        )}
-      </label>
-
-      <button
-        type="submit"
-        className={styles.greenButton}
-        disabled={submitting}
+    <>
+      <form
+        className={styles.formLayout}
+        onSubmit={handleSubmit(onSubmitHandler)}
       >
-        <p>{submitting ? "Ładowanie..." : "Zarejestruj się"}</p>
-      </button>
-    </form>
+        <label>
+          <p>Login:</p>
+          <input {...register("username")} />
+          {errors["username"] && <span>{errors["username"].message}</span>}
+        </label>
+
+        <label>
+          <p>Hasło:</p>
+          <PasswordInput register={register} value="password" />
+          {errors["password"] && <span>{errors["password"].message}</span>}
+        </label>
+
+        <label>
+          <p>Potwierdź hasło:</p>
+          <PasswordInput register={register} value="passwordConfirm" />
+          {errors["passwordConfirm"] && (
+            <span>{errors["passwordConfirm"].message}</span>
+          )}
+        </label>
+
+        <button
+          type="submit"
+          className={styles.greenButton}
+          disabled={submitting}
+        >
+          <p>{submitting ? "Ładowanie..." : "Zarejestruj się"}</p>
+        </button>
+      </form>
+
+      {/* <div className={styles.providersButtons}>
+        <button onClick={() => signIn("github")}>
+          <p>Konto Github</p>
+        </button>
+
+        <button onClick={() => signIn("google")}>
+          <p>Konto Google</p>
+        </button>
+      </div> */}
+    </>
   );
 }

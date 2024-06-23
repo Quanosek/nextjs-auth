@@ -1,6 +1,8 @@
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import CredentialsProvider from "next-auth/providers/credentials";
+import Github from "next-auth/providers/github";
+import Google from "next-auth/providers/google";
+import Credentials from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 import db from "@/lib/db";
 
@@ -12,10 +14,12 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   trustHost: true,
 
   providers: [
-    CredentialsProvider({
-      name: "Credentials",
+    Github,
+    Google,
+
+    Credentials({
       credentials: {
-        username: { label: "Username", type: "text" },
+        username: { label: "Username" },
         password: { label: "Password", type: "password" },
       },
 

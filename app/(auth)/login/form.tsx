@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { LoginUserInput, loginUserSchema } from "@/lib/user-schema";
-import PasswordInput from "./passwordInput";
+import PasswordInput from "@/components/passwordInput";
 
 import styles from "@/styles/forms.module.scss";
 
@@ -41,16 +41,9 @@ export default function LoginForm() {
 
       // reCAPTCHA verification
       const reCaptchaToken = await executeRecaptcha("register");
-      const reCaptchaResponse = await axios.post(
-        "/api/reCaptcha",
-        { reCaptchaToken },
-        {
-          headers: {
-            Accept: "application/json text/plain */*",
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const reCaptchaResponse = await axios.post("/api/reCaptcha", {
+        reCaptchaToken,
+      });
 
       console.log("reCaptcha score:", reCaptchaResponse.data.score);
 
@@ -84,25 +77,41 @@ export default function LoginForm() {
   };
 
   return (
-    <form
-      className={styles.formLayout}
-      onSubmit={handleSubmit(onSubmitHandler)}
-    >
-      <label>
-        <p>Login:</p>
-        <input type="text" {...register("username")} />
-        {errors["username"] && <span>{errors["username"].message}</span>}
-      </label>
+    <>
+      <form
+        className={styles.formLayout}
+        onSubmit={handleSubmit(onSubmitHandler)}
+      >
+        <label>
+          <p>Login:</p>
+          <input {...register("username")} />
+          {errors["username"] && <span>{errors["username"].message}</span>}
+        </label>
 
-      <label>
-        <p>Hasło:</p>
-        <PasswordInput register={register} value="password" />
-        {errors["password"] && <span>{errors["password"].message}</span>}
-      </label>
+        <label>
+          <p>Hasło:</p>
+          <PasswordInput register={register} value="password" />
+          {errors["password"] && <span>{errors["password"].message}</span>}
+        </label>
 
-      <button type="submit" className={styles.blueButton} disabled={submitting}>
-        <p>{submitting ? "Ładowanie..." : "Zaloguj się"}</p>
-      </button>
-    </form>
+        <button
+          type="submit"
+          className={styles.blueButton}
+          disabled={submitting}
+        >
+          <p>{submitting ? "Ładowanie..." : "Zaloguj się"}</p>
+        </button>
+      </form>
+
+      {/* <div className={styles.providersButtons}>
+        <button onClick={() => signIn("github")}>
+          <p>Konto Github</p>
+        </button>
+
+        <button onClick={() => signIn("google")}>
+          <p>Konto Google</p>
+        </button>
+      </div> */}
+    </>
   );
 }

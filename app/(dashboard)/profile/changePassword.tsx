@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 import { RegisterUserInput, registerUserSchema } from "@/lib/user-schema";
-import PasswordInput from "@/components/forms/passwordInput";
+import PasswordInput from "@/components/passwordInput";
 
 import styles from "@/styles/forms.module.scss";
 

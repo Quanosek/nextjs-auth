@@ -15,23 +15,22 @@ export default function ActionButtonsComponent(param: { id: string }) {
     if (!confirm("Czy na pewno chcesz się wylogować?")) return;
 
     await signOut({ redirect: false });
-    toast.success("Zostałeś wylogowany");
+    toast.success("Zostałeś pomyślnie wylogowany");
     router.push("/login");
     router.refresh();
   };
 
   const deleteHandler = async () => {
-    if (!confirm("Czy na pewno chcesz usunąć konto?")) return;
+    if (!confirm("Czy na pewno chcesz usunąć swoje konto?")) return;
 
     const response = await axios.delete("/api/deleteUser", {
       data: JSON.stringify({ id }),
-      headers: { "Content-Type": "application/json" },
     });
 
     if (response.status === 200) {
       await signOut({ redirect: false });
-      toast.success("Twoje konto zostało usunięte");
-      router.push("/register");
+      toast.success("Twoje konto zostało pomyślnie usunięte");
+      router.push("/");
       router.refresh();
     } else {
       toast.error(response.data.message);

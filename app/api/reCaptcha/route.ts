@@ -9,8 +9,7 @@ export async function POST(req: Request) {
     // verify reCaptcha token
     const { data } = await axios.post(
       "https://www.google.com/recaptcha/api/siteverify",
-      `secret=${secretKey}&response=${reCaptchaToken}`,
-      { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+      `secret=${secretKey}&response=${reCaptchaToken}`
     );
 
     // return successful user score
