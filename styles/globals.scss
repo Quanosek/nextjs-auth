@@ -18,7 +18,7 @@ $header-height: 3.5rem;
 main {
   position: relative;
   margin-top: $header-height;
-  padding: 2rem min(3%, 3rem) 6rem;
+  padding: 2rem min(3%, 3rem) 4rem;
   min-height: calc(100svh - $header-height);
 
   display: flex;

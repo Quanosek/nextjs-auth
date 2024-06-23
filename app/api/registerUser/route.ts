@@ -4,8 +4,9 @@ import db from "@/lib/db";
 import { registerUserSchema } from "@/lib/user-schema";
 
 export async function POST(req: Request) {
+  const body = await req.json();
+
   try {
-    const body = await req.json();
     const username = registerUserSchema.parse(body).username.toLowerCase();
 
     // check existing user
@@ -24,13 +25,12 @@ export async function POST(req: Request) {
     }
 
     // define new user without public password
-    const newPassword = await hash(body.password, 12);
-
+    const password = await hash(body.password, 12);
     const newUser = await db.user.create({
-      data: { username, password: newPassword },
+      data: { username, password },
     });
 
-    const { password, ...user } = newUser;
+    const { password: _, ...user } = newUser;
 
     // return new user data
     return NextResponse.json(

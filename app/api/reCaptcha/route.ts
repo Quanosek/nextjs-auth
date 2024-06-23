@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import axios from "axios";
 
 export async function POST(req: Request) {
-  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
   const { reCaptchaToken } = await req.json();
+  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
 
   try {
     // verify reCaptcha token

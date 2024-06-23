@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { LoginUserInput, loginUserSchema } from "@/lib/user-schema";
-import PasswordInput from "@/components/forms/passwordInput";
+import PasswordInput from "./passwordInput";
 
 import styles from "@/styles/forms.module.scss";
 
@@ -30,7 +30,7 @@ export default function LoginForm() {
   } = methods;
 
   const onSubmitHandler: SubmitHandler<LoginUserInput> = async (values) => {
-    const { username, password } = values;
+    const username = values.username.toLowerCase();
 
     if (!executeRecaptcha) {
       return toast.error("Wystąpił błąd podczas ładowania reCAPTCHA");
@@ -61,7 +61,7 @@ export default function LoginForm() {
       // sign in API verification
       const loginResponse = await signIn("credentials", {
         username,
-        password,
+        password: values.password,
         redirect: false,
       });
 
@@ -71,9 +71,9 @@ export default function LoginForm() {
         reset({ password: "" });
         toast.error("Niepoprawny adres e-mail lub hasło");
       } else {
-        // update user session
-        router.refresh();
         toast.success(`Witaj ponownie, @${username}!`);
+        router.push("/profile");
+        router.refresh();
       }
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd");

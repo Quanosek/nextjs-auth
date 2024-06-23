@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { RegisterUserInput, registerUserSchema } from "@/lib/user-schema";
-import PasswordInput from "@/components/forms/passwordInput";
+import PasswordInput from "./passwordInput";
 
 import styles from "@/styles/forms.module.scss";
 
@@ -61,14 +61,12 @@ export default function RegisterForm() {
         body: JSON.stringify(values),
       });
 
-      if (!registerResponse.ok) {
-        // handle custom errors
+      if (registerResponse.ok) {
+        toast.success("Pomyślnie utworzono nowe konto");
+        router.push("/login");
+      } else {
         const errorData = await registerResponse.json();
         toast.error(errorData.message);
-      } else {
-        // redirect on successful registration
-        router.push("/login");
-        toast.success("Pomyślnie utworzono nowe konto");
       }
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd");

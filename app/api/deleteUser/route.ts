@@ -2,14 +2,13 @@ import { NextResponse } from "next/server";
 import db from "@/lib/db";
 
 export async function DELETE(req: Request) {
-  const body = await req.json();
-  const id = body.id;
+  const { id } = await req.json();
 
   // id not provided error
   if (!id) {
     return NextResponse.json(
       {
-        message: "ID is required",
+        message: "Nie podano ID użytkownika",
       },
       { status: 400 }
     );
@@ -22,7 +21,7 @@ export async function DELETE(req: Request) {
     // return success message
     return NextResponse.json(
       {
-        message: "User deleted successfully",
+        message: "Pomyślnie usunięto konto",
       },
       { status: 200 }
     );
@@ -30,7 +29,7 @@ export async function DELETE(req: Request) {
     // return error message
     return NextResponse.json(
       {
-        message: "An error occurred while deleting the user",
+        message: "Wystąpił nieoczekiwany błąd",
         error,
       },
       { status: 500 }
