@@ -61,8 +61,8 @@ export default function FormComponent() {
         router.push("/login");
       } else {
         reset({ passwordConfirm: "" });
-        const errorData = await registerResponse.json();
-        toast.error(errorData.message);
+        const error = await registerResponse.json();
+        toast.error(error.message);
       }
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd, spróbuj ponownie");

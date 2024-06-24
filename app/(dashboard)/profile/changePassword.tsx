@@ -36,18 +36,18 @@ export default function ChangePasswordComponent(param: { username: string }) {
         return;
       }
 
-      const changePassword = await fetch("/api/changePassword", {
+      const response = await fetch("/api/changePassword", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, ...values }),
       });
 
-      if (changePassword.ok) {
+      if (response.ok) {
         reset({ currentPassword: "", newPassword: "", newPasswordConfirm: "" });
         toast.success("Twoje hasło zostało zmienione");
       } else {
-        const errorData = await changePassword.json();
-        toast.error(errorData.message);
+        const error = await response.json();
+        toast.error(error.message);
       }
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd, spróbuj ponownie");
