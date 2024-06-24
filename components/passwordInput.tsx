@@ -6,10 +6,10 @@ import { useState } from "react";
 import styles from "@/styles/forms.module.scss";
 
 export default function PasswordInput(params: {
-  register: any;
-  value: "password" | "passwordConfirm";
+  function: any;
+  value: string;
 }) {
-  const { register, value } = params;
+  const { function: register, value } = params;
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (

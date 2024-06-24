@@ -13,7 +13,7 @@ import PasswordInput from "@/components/passwordInput";
 
 import styles from "@/styles/forms.module.scss";
 
-export default function LoginForm() {
+export default function FormComponent() {
   const router = useRouter();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
@@ -69,7 +69,7 @@ export default function LoginForm() {
         router.refresh();
       }
     } catch (error) {
-      toast.error("Wystąpił nieoczekiwany błąd");
+      toast.error("Wystąpił nieoczekiwany błąd, spróbuj ponownie");
       console.error(error);
     } finally {
       setSubmitting(false);
@@ -90,15 +90,11 @@ export default function LoginForm() {
 
         <label>
           <p>Hasło:</p>
-          <PasswordInput register={register} value="password" />
+          <PasswordInput function={register} value="password" />
           {errors["password"] && <span>{errors["password"].message}</span>}
         </label>
 
-        <button
-          type="submit"
-          className={styles.blueButton}
-          disabled={submitting}
-        >
+        <button type="submit" className={styles.blue} disabled={submitting}>
           <p>{submitting ? "Ładowanie..." : "Zaloguj się"}</p>
         </button>
       </form>

@@ -1,5 +1,5 @@
 {
-  "version": "0.1.4",
+  "version": "0.1.5",
   "name": "nextjs-auth",
   "description": "Next.js Database Authentication with Auth.js and Prisma",
   "scripts": {

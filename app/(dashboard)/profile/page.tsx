@@ -17,12 +17,12 @@ export default async function ProfilePage() {
         <p>Username: @{user.username}</p>
       </div>
 
-      {/* <div className={styles.changePassword}>
+      <div className={styles.changePassword}>
         <h2>Zmiana hasła</h2>
-        <ChangePassword />
-      </div> */}
+        <ChangePassword username={user?.username} />
+      </div>
 
-      <OperationButtons id={user?.id} />
+      <OperationButtons username={user?.username} />
     </main>
   );
 }

@@ -7,8 +7,8 @@ import axios from "axios";
 
 import styles from "@/styles/dashboard.module.scss";
 
-export default function ActionButtonsComponent(param: { id: string }) {
-  const id = param.id;
+export default function OperationButtonsComponent(param: { username: string }) {
+  const username = param.username;
   const router = useRouter();
 
   const logoutHandler = async () => {
@@ -23,8 +23,8 @@ export default function ActionButtonsComponent(param: { id: string }) {
   const deleteHandler = async () => {
     if (!confirm("Czy na pewno chcesz usunąć swoje konto?")) return;
 
-    const response = await axios.delete("/api/deleteUser", {
-      data: JSON.stringify({ id }),
+    const response = await axios.delete("/api/user", {
+      data: JSON.stringify({ username }),
     });
 
     if (response.status === 200) {

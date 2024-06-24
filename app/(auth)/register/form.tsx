@@ -13,7 +13,7 @@ import PasswordInput from "@/components/passwordInput";
 
 import styles from "@/styles/forms.module.scss";
 
-export default function RegisterForm() {
+export default function FormComponent() {
   const router = useRouter();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
@@ -50,7 +50,7 @@ export default function RegisterForm() {
       }
 
       // registration API call
-      const registerResponse = await fetch("/api/registerUser", {
+      const registerResponse = await fetch("/api/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
@@ -65,7 +65,7 @@ export default function RegisterForm() {
         toast.error(errorData.message);
       }
     } catch (error) {
-      toast.error("Wystąpił nieoczekiwany błąd");
+      toast.error("Wystąpił nieoczekiwany błąd, spróbuj ponownie");
       console.error(error);
     } finally {
       setSubmitting(false);
@@ -86,23 +86,19 @@ export default function RegisterForm() {
 
         <label>
           <p>Hasło:</p>
-          <PasswordInput register={register} value="password" />
+          <PasswordInput function={register} value="password" />
           {errors["password"] && <span>{errors["password"].message}</span>}
         </label>
 
         <label>
           <p>Potwierdź hasło:</p>
-          <PasswordInput register={register} value="passwordConfirm" />
+          <PasswordInput function={register} value="passwordConfirm" />
           {errors["passwordConfirm"] && (
             <span>{errors["passwordConfirm"].message}</span>
           )}
         </label>
 
-        <button
-          type="submit"
-          className={styles.greenButton}
-          disabled={submitting}
-        >
+        <button type="submit" className={styles.green} disabled={submitting}>
           <p>{submitting ? "Ładowanie..." : "Zarejestruj się"}</p>
         </button>
       </form>
