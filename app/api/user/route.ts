@@ -8,7 +8,7 @@ export async function POST(req: Request) {
 
   try {
     const username = body.username.toLowerCase();
-    const existingUser = await db.user.findUnique({ where: { username } });
+    const existingUser = await db.users.findUnique({ where: { username } });
 
     // user already exists error
     if (existingUser) {
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     const password = await hash(body.password, 12); // secure password value
 
     // create new user
-    const newUser = await db.user.create({
+    const newUser = await db.users.create({
       data: { username, password },
     });
 
@@ -55,7 +55,7 @@ export async function DELETE(req: Request) {
     }
 
     const username = body.username.toLowerCase();
-    const existingUser = await db.user.findUnique({ where: { username } });
+    const existingUser = await db.users.findUnique({ where: { username } });
 
     // user not found error
     if (!existingUser) {
@@ -66,7 +66,7 @@ export async function DELETE(req: Request) {
     }
 
     // delete user
-    await db.user.delete({ where: { username } });
+    await db.users.delete({ where: { username } });
 
     // return success message
     return NextResponse.json(

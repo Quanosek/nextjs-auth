@@ -86,10 +86,10 @@ footer {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 85%;
 
   p {
-    opacity: 75%;
+    opacity: 80%;
+    font-size: 90%;
   }
 }
 
@@ -99,8 +99,9 @@ button {
   cursor: pointer !important;
 }
 
-button {
-  padding: 10px 24px;
+button,
+.button {
+  padding: 12px 26px;
   border-radius: 4px;
   background-color: #232323;
   transition: 0.2s background-color ease-in-out;

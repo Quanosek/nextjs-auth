@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     }
 
     const username = body.username.toLowerCase();
-    const existingUser = await db.user.findUnique({ where: { username } });
+    const existingUser = await db.users.findUnique({ where: { username } });
 
     // user already exists error
     if (!existingUser) {
@@ -40,7 +40,7 @@ export async function POST(req: Request) {
 
     // secure new password value
     const hashedPassword = await hash(newPassword, 12);
-    await db.user.update({
+    await db.users.update({
       where: { username },
       data: { password: hashedPassword },
     });

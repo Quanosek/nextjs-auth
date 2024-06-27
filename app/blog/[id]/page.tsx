@@ -8,28 +8,29 @@ export default async function ArticlePage({
   params: { id: string };
 }) {
   const { id } = params;
-  const article = await db.article.findUnique({ where: { id } });
+  const article = await db.posts.findUnique({ where: { id } });
 
   if (!article) {
     return (
       <main>
-        <h1>Artykuł nie istnieje</h1>
+        <h1>Wpis nie istnieje {":("}</h1>
       </main>
     );
   }
 
-  const author = await db.user.findUnique({ where: { id: article.authorId } });
   const formattedDate = new Date(article.createdAt).toLocaleString("pl-PL");
 
   return (
     <main>
-      <div className={styles.titleSection}>
-        <h1>{article.title}</h1>
-        <p>{`@${author?.username} • ${formattedDate}`}</p>
-        <hr />
-      </div>
+      <div className={styles.articleLayout}>
+        <div className={styles.title}>
+          <h1>{article.title}</h1>
+          <p>{`@${article.author} • ${formattedDate}`}</p>
+          <hr />
+        </div>
 
-      <p className={styles.content}>{article.content}</p>
+        <p className={styles.content}>{article.content}</p>
+      </div>
     </main>
   );
 }

@@ -5,28 +5,45 @@
   gap: 0.5rem;
 
   a {
-    padding: 1.5rem;
+    padding: 1.25rem 1rem;
+    height: 8rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
-    color: white;
+    gap: 12px;
+    text-align: left;
     background-color: #232323;
     border-radius: 4px;
+    transition: filter 0.2s ease-out;
+    overflow: hidden;
 
-    &:hover h2 {
-      text-decoration: underline;
+    h2 {
+      text-transform: uppercase;
     }
 
     p {
       opacity: 80%;
       font-size: 90%;
     }
+
+    &:hover {
+      filter: brightness(1.1);
+
+      h2 {
+        text-decoration: underline;
+      }
+    }
   }
 }
 
-.titleSection {
-  width: 50rem;
+.articleLayout {
+  margin-top: 1.5rem;
+  width: min(60rem, 90svw);
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
   display: flex;
   flex-direction: column;
 
@@ -36,8 +53,7 @@
   }
 
   hr {
-    margin: 1.5rem 0 1rem;
-    width: 100%;
+    margin: 1.5rem 0 2rem;
     height: 2px;
     border-radius: 100%;
     background-color: #575757;

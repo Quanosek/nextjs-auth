@@ -14,25 +14,30 @@ export default async function ProfilePage() {
       <h1>Twoje konto</h1>
 
       <div className={styles.userData}>
-        <p>ID: {user?.id}</p>
-        <p>Username: @{user?.username}</p>
+        <p>@{user?.username}</p>
+        <p className={styles.userId}>ID: {user?.id}</p>
       </div>
 
-      <div className={styles.blogActions}>
-        <h2>Blog:</h2>
+      <section className={styles.blogSection}>
+        <h2>Działania na blogu:</h2>
 
         <div className={styles.buttons}>
-          <Link href="/blog/create">Stwórz nowy artykuł</Link>
-          <Link href="/blog/list">Otwórz listę wszystkich artykułów</Link>
+          <Link href="/blog/create" className="button">
+            <p>Napisz nowy post</p>
+          </Link>
+
+          <Link href="/blog" className="button">
+            <p>Otwórz listę wszystkich postów</p>
+          </Link>
         </div>
-      </div>
+      </section>
 
       <hr />
 
-      <div className={styles.changePassword}>
-        <h2>Zmiana hasła:</h2>
+      <section className={styles.changePassword}>
+        <h2>Zmień swoje hasło:</h2>
         <ChangePassword username={user?.username} />
-      </div>
+      </section>
 
       <hr />
 

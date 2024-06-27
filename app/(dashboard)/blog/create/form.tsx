@@ -12,19 +12,22 @@ interface FormValues {
   content: string;
 }
 
-export default function FormComponent(params: { authorId: string }) {
-  const authorId = params.authorId;
+export default function FormComponent(params: { author: string }) {
+  const { author } = params;
+  if (!author) return;
 
   const router = useRouter();
   const { handleSubmit, register } = useForm<FormValues>();
 
   const onSubmitHandler: SubmitHandler<FormValues> = async (values) => {
+    if (!confirm("Czy na pewno chcesz opublikować ten artykuł?")) return;
+
     try {
       // registration API call
       const response = await fetch("/api/blog", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ authorId, ...values }),
+        body: JSON.stringify({ author, ...values }),
       });
 
       const data = await response.json();
@@ -32,6 +35,7 @@ export default function FormComponent(params: { authorId: string }) {
       if (response.ok) {
         toast.success("Opublikowano nowy artykuł");
         router.push(`/blog/${data.article.id}`);
+        router.refresh();
       } else {
         toast.error(data.message);
       }
@@ -52,6 +56,7 @@ export default function FormComponent(params: { authorId: string }) {
           type="text"
           placeholder="Najlepsze domki w górach"
           {...register("title")}
+          required
         />
       </label>
 
@@ -60,6 +65,7 @@ export default function FormComponent(params: { authorId: string }) {
         <TextareaAutosize
           placeholder="Lorem ipsum dolor sit amet consectetur..."
           {...register("content")}
+          required
         />
       </label>
 

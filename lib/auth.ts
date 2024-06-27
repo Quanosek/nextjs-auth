@@ -22,7 +22,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         if (!credentials.username || !credentials.password) return null;
 
         // Check if the user exists and the password is correct
-        const existingUser = await db.user.findUnique({
+        const existingUser = await db.users.findUnique({
           where: { username: credentials.username as string },
         });
         if (!existingUser) return null;

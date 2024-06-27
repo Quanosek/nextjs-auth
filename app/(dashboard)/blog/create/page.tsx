@@ -3,13 +3,13 @@ import Form from "./form";
 
 export default async function BlogCreatePage() {
   const session = await auth();
-  const user = session?.user as { id: string; username: string };
+  const user = session?.user as any;
 
   return (
     <main>
-      <h1>Nowy artykuł</h1>
+      <h1>Nowy post</h1>
 
-      <Form authorId={user?.id} />
+      <Form author={user?.username} />
     </main>
   );
 }

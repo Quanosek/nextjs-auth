@@ -1,0 +1,43 @@
+.postsList {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+
+  .post {
+    overflow: hidden;
+    padding: 1.25rem 1rem;
+    width: calc(20% - (4 * 5px));
+    height: 12rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+    background-color: #232323;
+    border-radius: 4px;
+    transition: width 0.2s ease-in-out, filter 0.3s ease-out;
+
+    &:hover {
+      width: 25%;
+      filter: brightness(1.1);
+    }
+
+    h2 {
+      margin-bottom: -2px;
+      text-transform: uppercase;
+    }
+
+    span {
+      opacity: 80%;
+      font-size: 90%;
+    }
+
+    p {
+      font-size: 90%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

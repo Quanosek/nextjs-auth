@@ -4,7 +4,7 @@ import db from "@/lib/db";
 export async function GET() {
   try {
     // get all articles
-    const articles = await db.article.findMany();
+    const articles = await db.posts.findMany();
 
     // return success message
     return NextResponse.json({ articles }, { status: 200 });
@@ -21,8 +21,8 @@ export async function POST(req: Request) {
   const body = await req.json();
 
   try {
-    const authorId = body.authorId.toLowerCase();
-    const user = await db.user.findUnique({ where: { id: authorId } });
+    const username = body.author.toLowerCase();
+    const user = await db.users.findUnique({ where: { username } });
 
     // user not exist error
     if (!user) {
@@ -33,12 +33,12 @@ export async function POST(req: Request) {
     }
 
     // create new article
-    const newArticle = await db.article.create({
+    const newArticle = await db.posts.create({
       data: body,
     });
 
     // return success message
-    const { authorId: _, ...article } = newArticle;
+    const { author: _, ...article } = newArticle;
 
     return NextResponse.json(
       {
