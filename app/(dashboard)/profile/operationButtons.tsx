@@ -6,8 +6,9 @@ import toast from "react-hot-toast";
 
 import styles from "@/styles/dashboard.module.scss";
 
-export default function OperationButtonsComponent(param: { username: string }) {
-  const username = param.username;
+export default function OperationButtonsComponent(params: {
+  username: string;
+}) {
   const router = useRouter();
 
   const logoutHandler = async () => {
@@ -26,7 +27,7 @@ export default function OperationButtonsComponent(param: { username: string }) {
       const response = await fetch("/api/user", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username }),
+        body: JSON.stringify({ username: params.username }),
       });
 
       if (response.ok) {

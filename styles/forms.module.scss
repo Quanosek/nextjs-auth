@@ -27,12 +27,21 @@ $input-height: 2.5rem;
 
   $elem-color: #333333;
 
-  input {
+  input,
+  textarea {
     padding: 8px 10px;
-    height: 2.5rem;
     background-color: $elem-color;
     border: 1px solid $elem-color;
     border-radius: 4px;
+  }
+
+  input {
+    height: 2.5rem;
+  }
+
+  textarea {
+    min-height: 6rem;
+    resize: vertical;
   }
 
   button {
@@ -91,7 +100,7 @@ $input-height: 2.5rem;
     padding: 5px;
     height: 100%;
     aspect-ratio: 1/1;
-    background-color: transparent;
+    background-color: transparent !important;
     user-select: none;
 
     img {

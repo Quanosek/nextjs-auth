@@ -25,7 +25,7 @@ export default function PasswordInput(params: {
         onClick={() => setPasswordVisible(!passwordVisible)}
       >
         <Image
-          src={`/icons/${passwordVisible ? "eye-hide" : "eye"}.svg`}
+          src={`/icons/${passwordVisible ? "eye" : "eye-hide"}.svg`}
           alt=""
           height={24}
           width={24}

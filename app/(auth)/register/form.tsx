@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
@@ -17,17 +16,16 @@ export default function FormComponent() {
   const router = useRouter();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
-  const [submitting, setSubmitting] = useState(false); // loading state
-  const methods = useForm<RegisterUserInput>({
-    resolver: zodResolver(registerUserSchema),
-  });
-
   const {
     reset,
     handleSubmit,
     register,
     formState: { errors },
-  } = methods;
+  } = useForm<RegisterUserInput>({
+    resolver: zodResolver(registerUserSchema),
+  });
+
+  const [submitting, setSubmitting] = useState(false); // loading state
 
   const onSubmitHandler: SubmitHandler<RegisterUserInput> = async (values) => {
     if (!executeRecaptcha) {
@@ -102,16 +100,6 @@ export default function FormComponent() {
           <p>{submitting ? "Ładowanie..." : "Zarejestruj się"}</p>
         </button>
       </form>
-
-      {/* <div className={styles.providersButtons}>
-        <button onClick={() => signIn("github")}>
-          <p>Konto Github</p>
-        </button>
-
-        <button onClick={() => signIn("google")}>
-          <p>Konto Google</p>
-        </button>
-      </div> */}
     </>
   );
 }

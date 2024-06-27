@@ -9,20 +9,17 @@ import PasswordInput from "@/components/passwordInput";
 
 import styles from "@/styles/forms.module.scss";
 
-export default function ChangePasswordComponent(param: { username: string }) {
-  const username = param.username;
-
-  const [submitting, setSubmitting] = useState(false); // loading state
-  const methods = useForm<ChangePasswordInput>({
-    resolver: zodResolver(ChangePasswordSchema),
-  });
-
+export default function ChangePasswordComponent(params: { username: string }) {
   const {
     reset,
     handleSubmit,
     register,
     formState: { errors },
-  } = methods;
+  } = useForm<ChangePasswordInput>({
+    resolver: zodResolver(ChangePasswordSchema),
+  });
+
+  const [submitting, setSubmitting] = useState(false); // loading state
 
   const onSubmitHandler: SubmitHandler<ChangePasswordInput> = async (
     values
@@ -32,14 +29,14 @@ export default function ChangePasswordComponent(param: { username: string }) {
 
       if (values.currentPassword === values.newPassword) {
         reset({ newPassword: "", newPasswordConfirm: "" });
-        toast.error("Nowe hasło musi się różnić od obecnego");
+        toast.error("Nowe hasło nie może być takie samo jak obecnie używane");
         return;
       }
 
       const response = await fetch("/api/changePassword", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, ...values }),
+        body: JSON.stringify({ username: params.username, ...values }),
       });
 
       if (response.ok) {

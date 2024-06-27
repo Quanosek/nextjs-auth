@@ -1,12 +1,11 @@
 import { redirect } from "next/navigation";
-import { ReactNode } from "react";
 import { auth } from "@/lib/auth";
 import ReCaptchaWrapper from "@/components/wrappers/reCaptcha";
 
 export default async function AuthLayout({
   children,
 }: {
-  children: ReactNode;
+  children: React.ReactNode;
 }) {
   const session = await auth();
   const user = session?.user;

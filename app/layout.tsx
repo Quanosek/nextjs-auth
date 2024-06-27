@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
-import Session from "@/components/wrappers/session";
+import Provider from "@/components/wrappers/provider";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 
@@ -17,29 +16,33 @@ export const metadata: Metadata = {
   icons: "/favicon.ico",
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="pl">
       <body className={inter.className}>
-        <Session>
+        <Provider>
           <Header />
           {children}
           <Footer />
+        </Provider>
 
-          <Toaster
-            containerStyle={{ top: "calc(3.5rem / 2)" }}
-            toastOptions={{
-              style: {
-                background: "#232323",
-                color: "#ededed",
-              },
-              iconTheme: {
-                primary: "#ededed",
-                secondary: "#232323",
-              },
-            }}
-          />
-        </Session>
+        <Toaster
+          containerStyle={{ top: "calc(3.5rem / 2)" }}
+          toastOptions={{
+            style: {
+              background: "#232323",
+              color: "#ededed",
+            },
+            iconTheme: {
+              primary: "#ededed",
+              secondary: "#232323",
+            },
+          }}
+        />
       </body>
     </html>
   );

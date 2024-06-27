@@ -6,6 +6,11 @@
   box-shadow: 0 0 1px 1px #ededed;
 }
 
+::placeholder {
+  opacity: 35%;
+  font-size: 95%;
+}
+
 html,
 body {
   color: #ededed;

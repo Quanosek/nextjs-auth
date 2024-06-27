@@ -17,17 +17,16 @@ export default function FormComponent() {
   const router = useRouter();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
-  const [submitting, setSubmitting] = useState(false); // loading state
-  const methods = useForm<LoginUserInput>({
-    resolver: zodResolver(loginUserSchema),
-  });
-
   const {
     reset,
     handleSubmit,
     register,
     formState: { errors },
-  } = methods;
+  } = useForm<LoginUserInput>({
+    resolver: zodResolver(loginUserSchema),
+  });
+
+  const [submitting, setSubmitting] = useState(false); // loading state
 
   const onSubmitHandler: SubmitHandler<LoginUserInput> = async (values) => {
     const username = values.username.toLowerCase();
@@ -98,16 +97,6 @@ export default function FormComponent() {
           <p>{submitting ? "Ładowanie..." : "Zaloguj się"}</p>
         </button>
       </form>
-
-      {/* <div className={styles.providersButtons}>
-        <button onClick={() => signIn("github")}>
-          <p>Konto Github</p>
-        </button>
-
-        <button onClick={() => signIn("google")}>
-          <p>Konto Google</p>
-        </button>
-      </div> */}
     </>
   );
 }
