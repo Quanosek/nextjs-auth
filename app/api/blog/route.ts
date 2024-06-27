@@ -3,11 +3,11 @@ import db from "@/lib/db";
 
 export async function GET() {
   try {
-    // get all articles
-    const articles = await db.posts.findMany();
+    // get all posts
+    const posts = await db.posts.findMany();
 
     // return success message
-    return NextResponse.json({ articles }, { status: 200 });
+    return NextResponse.json({ posts }, { status: 200 });
   } catch (error) {
     // return error message
     return NextResponse.json(
@@ -32,18 +32,18 @@ export async function POST(req: Request) {
       );
     }
 
-    // create new article
-    const newArticle = await db.posts.create({
+    // create new post
+    const newPost = await db.posts.create({
       data: body,
     });
 
     // return success message
-    const { author: _, ...article } = newArticle;
+    const { author: _, ...post } = newPost;
 
     return NextResponse.json(
       {
         message: "Pomyślnie dodano nowy artykuł",
-        article: { ...article, author: user.username },
+        post: { ...post, author: user.username },
       },
       { status: 201 }
     );

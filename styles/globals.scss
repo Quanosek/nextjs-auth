@@ -93,6 +93,12 @@ footer {
   }
 }
 
+h1,
+h2 {
+  font-size: 125%;
+  font-weight: bold;
+}
+
 a,
 button {
   text-align: center;
@@ -109,12 +115,33 @@ button,
   &:hover {
     background-color: #2b2b2b;
   }
-}
 
-h1,
-h2 {
-  font-size: 125%;
-  font-weight: bold;
+  &.green {
+    color: #ffffff !important;
+    background-color: #24562e !important;
+
+    &:hover {
+      background-color: #31613a !important;
+    }
+  }
+
+  &.blue {
+    color: #ffffff !important;
+    background-color: #254869 !important;
+
+    &:hover {
+      background-color: #23507b !important;
+    }
+  }
+
+  &.red {
+    color: #ffffff !important;
+    background-color: #722424 !important;
+
+    &:hover {
+      background-color: #8d3636 !important;
+    }
+  }
 }
 
 // hide reCaptcha badge

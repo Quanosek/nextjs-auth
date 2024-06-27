@@ -96,7 +96,7 @@ export default function FormComponent() {
           )}
         </label>
 
-        <button type="submit" className={styles.green} disabled={submitting}>
+        <button type="submit" className="green" disabled={submitting}>
           <p>{submitting ? "Ładowanie..." : "Zarejestruj się"}</p>
         </button>
       </form>

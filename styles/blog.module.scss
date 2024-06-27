@@ -1,4 +1,4 @@
-.articlesGrid {
+.postsGrid {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -36,31 +36,94 @@
   }
 }
 
-.articleLayout {
-  margin-top: 1.5rem;
-  width: min(60rem, 90svw);
+$globalPadding: 1rem;
+
+.postLayout {
+  margin-top: 1rem;
+  width: min(62rem, 90svw);
   display: flex;
   flex-direction: column;
+
+  textarea {
+    background-color: #232323;
+    resize: vertical;
+  }
 }
 
-.title {
+.titleContainer {
+  position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  .title {
+    margin: 0;
+    width: 100%;
+    padding: $globalPadding;
+    font-size: 200%;
+    font-weight: bold;
+  }
 
   p {
+    padding: 0 $globalPadding;
+    width: 100%;
     opacity: 80%;
     font-size: 90%;
   }
 
   hr {
-    margin: 1.5rem 0 2rem;
+    margin: calc($globalPadding / 2) 0 $globalPadding;
+    width: calc(100% - (2 * $globalPadding));
     height: 2px;
     border-radius: 100%;
     background-color: #575757;
   }
+
+  .authorButtons {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    gap: 5px;
+
+    a,
+    button {
+      padding: 0.5rem 1.25rem;
+      background-color: #232323;
+      transition: 0.2s background-color ease-in-out;
+      border-radius: 4px;
+
+      &:hover {
+        background-color: #2b2b2b;
+      }
+
+      p {
+        padding: 0;
+      }
+    }
+  }
 }
 
 .content {
+  padding: $globalPadding;
+  min-height: 10rem;
   font-size: 110%;
   color: #ffffff;
+}
+
+.actionButtons {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+
+  button.redButton {
+    color: #ffffff;
+    background-color: #722424;
+
+    &:hover {
+      background-color: #8d3636;
+    }
+  }
 }

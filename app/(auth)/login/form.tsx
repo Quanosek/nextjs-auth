@@ -93,7 +93,7 @@ export default function FormComponent() {
           {errors["password"] && <span>{errors["password"].message}</span>}
         </label>
 
-        <button type="submit" className={styles.blue} disabled={submitting}>
+        <button type="submit" className="blue" disabled={submitting}>
           <p>{submitting ? "Ładowanie..." : "Zaloguj się"}</p>
         </button>
       </form>

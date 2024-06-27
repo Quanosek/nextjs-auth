@@ -34,7 +34,7 @@ export default function FormComponent(params: { author: string }) {
 
       if (response.ok) {
         toast.success("Opublikowano nowy artykuł");
-        router.push(`/blog/${data.article.id}`);
+        router.push(`/blog/${data.post.id}`);
         router.refresh();
       } else {
         toast.error(data.message);
