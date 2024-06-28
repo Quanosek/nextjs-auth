@@ -71,35 +71,33 @@ export default function FormComponent() {
   };
 
   return (
-    <>
-      <form
-        className={styles.formLayout}
-        onSubmit={handleSubmit(onSubmitHandler)}
-      >
-        <label>
-          <p>Login:</p>
-          <input {...register("username")} />
-          {errors["username"] && <span>{errors["username"].message}</span>}
-        </label>
+    <form
+      className={styles.formLayout}
+      onSubmit={handleSubmit(onSubmitHandler)}
+    >
+      <label>
+        <p>Login:</p>
+        <input {...register("username")} />
+        {errors["username"] && <span>{errors["username"].message}</span>}
+      </label>
 
-        <label>
-          <p>Hasło:</p>
-          <PasswordInput function={register} value="password" />
-          {errors["password"] && <span>{errors["password"].message}</span>}
-        </label>
+      <label>
+        <p>Hasło:</p>
+        <PasswordInput function={register} value="password" />
+        {errors["password"] && <span>{errors["password"].message}</span>}
+      </label>
 
-        <label>
-          <p>Potwierdź hasło:</p>
-          <PasswordInput function={register} value="passwordConfirm" />
-          {errors["passwordConfirm"] && (
-            <span>{errors["passwordConfirm"].message}</span>
-          )}
-        </label>
+      <label>
+        <p>Potwierdź hasło:</p>
+        <PasswordInput function={register} value="passwordConfirm" />
+        {errors["passwordConfirm"] && (
+          <span>{errors["passwordConfirm"].message}</span>
+        )}
+      </label>
 
-        <button type="submit" className="green" disabled={submitting}>
-          <p>{submitting ? "Ładowanie..." : "Zarejestruj się"}</p>
-        </button>
-      </form>
-    </>
+      <button type="submit" className="green" disabled={submitting}>
+        <p>{submitting ? "Ładowanie..." : "Zarejestruj się"}</p>
+      </button>
+    </form>
   );
 }

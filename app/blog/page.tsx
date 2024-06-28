@@ -17,14 +17,14 @@ export default async function BlogListPage() {
       <h1>Wszystkie posty na blogu</h1>
 
       <div className={styles.postsGrid}>
-        {posts.map(async (post: any) => {
+        {posts.map(async (post) => {
           const pattern = date.compile("HH:mm, DD MMM YYYY r.");
           const formattedDate = date.format(post.createdAt, pattern);
 
           return (
             <Link key={post.id} href={`/blog/${post.id}`}>
               <h2>{post.title}</h2>
-              <p>{`@${post.author} • ${formattedDate}`}</p>
+              <span>{`@${post.author} • ${formattedDate}`}</span>
             </Link>
           );
         })}

@@ -28,7 +28,7 @@ export default function FormComponent(props: { post: any }) {
   const { handleSubmit, register } = useForm<FormValues>();
   const [submitting, setSubmitting] = useState(false); // loading state
 
-  const submitHandler: SubmitHandler<FormValues> = async (values) => {
+  const onSubmitHandler: SubmitHandler<FormValues> = async (values) => {
     if (!confirm("Czy na pewno chcesz zapisać zmiany?")) return;
 
     try {
@@ -57,7 +57,10 @@ export default function FormComponent(props: { post: any }) {
   };
 
   return (
-    <form className={styles.postLayout} onSubmit={handleSubmit(submitHandler)}>
+    <form
+      className={styles.postLayout}
+      onSubmit={handleSubmit(onSubmitHandler)}
+    >
       <div className={styles.titleContainer}>
         <TextareaAutosize
           className={styles.title}

@@ -19,6 +19,7 @@ export default async function EditPostPage({
 
   return (
     <main>
+      <h1>Edytuj post</h1>
       <Form post={post} />
     </main>
   );

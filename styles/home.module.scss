@@ -2,14 +2,13 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 5px;
+  gap: 6px;
 
   .post {
     overflow: hidden;
     padding: 1.25rem 1rem;
-    width: calc(25%);
-    height: 12rem;
-
+    width: 25%;
+    height: 15rem;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -24,8 +23,12 @@
     }
 
     h2 {
-      margin-bottom: -2px;
       text-transform: uppercase;
+
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     span {
@@ -34,10 +37,12 @@
     }
 
     p {
-      font-size: 90%;
+      margin-top: 1rem;
+
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
       overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
   }
 }

@@ -7,8 +7,7 @@ export default async function BlogCreatePage() {
 
   return (
     <main>
-      <h1>Nowy post</h1>
-
+      <h1>Napisz nowy post</h1>
       <Form author={user?.username} />
     </main>
   );

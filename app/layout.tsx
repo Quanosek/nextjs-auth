@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Toaster } from "react-hot-toast";
+import { auth } from "@/lib/auth";
 import Provider from "@/components/wrappers/provider";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
+import AccountButton from "@/components/accountButton";
 
 import "@/styles/globals.scss";
 import "the-new-css-reset/css/reset.css";
@@ -16,18 +17,36 @@ export const metadata: Metadata = {
   icons: "/favicon.ico",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();
+
   return (
     <html lang="pl">
       <body className={inter.className}>
         <Provider>
-          <Header />
+          <header>
+            <h1>nextjs-auth</h1>
+
+            <div>
+              <Link href="/">Strona główna</Link>
+              <Link href="/blog">Blog</Link>
+              <AccountButton user={session?.user} />
+            </div>
+          </header>
+
           {children}
-          <Footer />
+
+          <footer>
+            <p>
+              Stworzone z 💙 przez{" "}
+              <Link href="https://github.com/Quanosek">Jakuba Kłało</Link>{" "}
+              &#169; 2024
+            </p>
+          </footer>
         </Provider>
 
         <Toaster

@@ -38,7 +38,7 @@ export default async function HomePage() {
       </div>
 
       <Link href="/blog" className="button">
-        <p>Zobacz więcej postów</p>
+        <p>Zobacz wszystkie posty</p>
       </Link>
     </main>
   );

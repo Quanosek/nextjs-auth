@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import TextareaAutosize from "react-textarea-autosize";
 
-import styles from "@/styles/forms.module.scss";
+import styles from "@/styles/blog.module.scss";
 
 interface FormValues {
   title: string;
@@ -54,31 +54,40 @@ export default function FormComponent(params: { author: string }) {
 
   return (
     <form
-      className={styles.formLayout}
+      className={styles.postLayout}
       onSubmit={handleSubmit(onSubmitHandler)}
     >
-      <label>
-        <p>Tytuł:</p>
-        <input
-          type="text"
+      <div className={styles.titleContainer}>
+        <TextareaAutosize
+          className={styles.title}
           placeholder="Najlepsze domki w górach"
           {...register("title")}
           required
         />
-      </label>
 
-      <label>
-        <p>Treść:</p>
-        <TextareaAutosize
-          placeholder="Lorem ipsum dolor sit amet consectetur..."
-          {...register("content")}
-          required
-        />
-      </label>
+        <p>{`@${author} • HH:mm, DD MMM YYYY r.`}</p>
+        <hr />
+      </div>
 
-      <button type="submit" disabled={submitting}>
-        <p>{submitting ? "Ładowanie..." : "Opublikuj"}</p>
-      </button>
+      <TextareaAutosize
+        className={styles.content}
+        placeholder="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta porro
+          sequi labore architecto dolor doloremque cupiditate, accusamus dolores
+          corporis commodi quasi illum provident dolorum explicabo suscipit est
+          cumque nesciunt. Dolorum?..."
+        {...register("content")}
+        required
+      />
+
+      <div className={styles.actionButtons}>
+        <button type="button" className="red" onClick={() => router.back()}>
+          <p>Anuluj</p>
+        </button>
+
+        <button type="submit" className="green" disabled={submitting}>
+          <p>{submitting ? "Ładowanie..." : "Opublikuj"}</p>
+        </button>
+      </div>
     </form>
   );
 }
