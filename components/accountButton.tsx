@@ -8,6 +8,6 @@ export default function HeaderComponent(params: { user: any }) {
   if (user) {
     return <Link href="/profile">Twoje konto</Link>;
   } else {
-    <Link href="/login">Zaloguj się</Link>;
+    return <Link href="/login">Zaloguj się</Link>;
   }
 }
