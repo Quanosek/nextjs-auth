@@ -7,7 +7,6 @@ export default async function EditPostPage({
   params: { id: string };
 }) {
   const { id } = params;
-
   const post = await db.posts.findUnique({ where: { id } });
 
   if (!post) {

@@ -57,8 +57,6 @@ export default function FormComponent() {
         redirect: false,
       });
 
-      setSubmitting(false);
-
       if (loginResponse?.error) {
         reset({ password: "" });
         toast.error("Niepoprawny adres e-mail lub hasło");

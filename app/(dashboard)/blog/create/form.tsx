@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import TextareaAutosize from "react-textarea-autosize";
@@ -18,11 +19,14 @@ export default function FormComponent(params: { author: string }) {
 
   const router = useRouter();
   const { handleSubmit, register } = useForm<FormValues>();
+  const [submitting, setSubmitting] = useState(false); // loading state
 
   const onSubmitHandler: SubmitHandler<FormValues> = async (values) => {
     if (!confirm("Czy na pewno chcesz opublikować ten artykuł?")) return;
 
     try {
+      setSubmitting(true);
+
       // registration API call
       const response = await fetch("/api/blog", {
         method: "POST",
@@ -42,6 +46,8 @@ export default function FormComponent(params: { author: string }) {
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd, spróbuj ponownie");
       console.error(error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -69,7 +75,9 @@ export default function FormComponent(params: { author: string }) {
         />
       </label>
 
-      <button>Opublikuj</button>
+      <button type="submit" disabled={submitting}>
+        <p>{submitting ? "Ładowanie..." : "Opublikuj"}</p>
+      </button>
     </form>
   );
 }

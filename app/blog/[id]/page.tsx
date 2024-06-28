@@ -19,7 +19,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     );
   }
 
-  const canEdit = post.author === user?.username;
+  const authorView = post.author === user?.username;
   const formattedDate = new Date(post.createdAt).toLocaleString("pl-PL");
 
   return (
@@ -34,7 +34,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
 
         <p className={styles.content}>{post.content}</p>
 
-        {canEdit && (
+        {authorView && (
           <div className={styles.actionButtons}>
             <Link href={`/blog/${post.id}/edit`} className="button blue">
               <p>Edytuj treść</p>

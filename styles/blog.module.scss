@@ -45,6 +45,7 @@ $globalPadding: 1rem;
   flex-direction: column;
 
   textarea {
+    margin-bottom: 0.5px !important;
     background-color: #232323;
     resize: vertical;
   }
