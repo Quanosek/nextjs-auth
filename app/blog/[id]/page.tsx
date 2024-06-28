@@ -3,6 +3,10 @@ import { auth } from "@/lib/auth";
 import db from "@/lib/db";
 import DeleteButton from "./deleteButton";
 
+import pl from "date-and-time/locale/pl";
+import date from "date-and-time";
+date.locale(pl);
+
 import styles from "@/styles/blog.module.scss";
 
 export default async function PostPage({ params }: { params: { id: string } }) {
@@ -14,13 +18,21 @@ export default async function PostPage({ params }: { params: { id: string } }) {
   if (!post) {
     return (
       <main>
-        <h1>Wpis nie istnieje {":("}</h1>
+        <h1>Ten post nie istnieje {":("}</h1>
       </main>
     );
   }
 
+  const pattern = date.compile("HH:mm, DD MMM YYYY r.");
+  let formattedDate = date.format(post.createdAt, pattern);
+
+  // If post was updated, display updated date
+  if (post.createdAt.getTime() !== post.updatedAt.getTime()) {
+    const updatedDate = date.format(post.updatedAt, pattern);
+    formattedDate = formattedDate.concat(` (aktualizacja: ${updatedDate})`);
+  }
+
   const authorView = post.author === user?.username;
-  const formattedDate = new Date(post.createdAt).toLocaleString("pl-PL");
 
   return (
     <main>

@@ -12,7 +12,7 @@ export default async function EditPostPage({
   if (!post) {
     return (
       <main>
-        <h1>Wpis nie istnieje {":("}</h1>
+        <h1>Ten post nie istnieje {":("}</h1>
       </main>
     );
   }

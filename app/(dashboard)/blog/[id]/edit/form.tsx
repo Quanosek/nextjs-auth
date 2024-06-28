@@ -6,6 +6,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import TextareaAutosize from "react-textarea-autosize";
 import toast from "react-hot-toast";
 
+import pl from "date-and-time/locale/pl";
+import date from "date-and-time";
+date.locale(pl);
+
 import styles from "@/styles/blog.module.scss";
 
 interface FormValues {
@@ -17,7 +21,9 @@ export default function FormComponent(props: { post: any }) {
   const post = props.post;
   const router = useRouter();
 
-  const formattedDate = new Date(post.createdAt).toLocaleString("pl-PL");
+  const patternString = "HH:mm, DD MMM YYYY r.";
+  const pattern = date.compile(patternString);
+  const formattedDate = date.format(post.createdAt, pattern);
 
   const { handleSubmit, register } = useForm<FormValues>();
   const [submitting, setSubmitting] = useState(false); // loading state
@@ -28,11 +34,20 @@ export default function FormComponent(props: { post: any }) {
     try {
       setSubmitting(true);
 
-      console.log(values); //TODO: save changes to post in database
+      const response = await fetch("/api/posts/change", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: post.id, ...values }),
+      });
 
-      //
-      //
-      //
+      if (response.ok) {
+        toast.success("Post został zaktualizowany");
+        router.push(`/blog/${post.id}`);
+        router.refresh();
+      } else {
+        const error = await response.json();
+        toast.error(error.message);
+      }
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd, spróbuj ponownie");
       console.error(error);
@@ -51,7 +66,7 @@ export default function FormComponent(props: { post: any }) {
           required
         />
 
-        <p>{`@${post.author} • ${formattedDate}`}</p>
+        <p>{`@${post.author} • ${formattedDate} (aktualizacja: ${patternString})`}</p>
         <hr />
       </div>
 

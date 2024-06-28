@@ -24,7 +24,7 @@ export default function OperationButtonsComponent(params: {
     if (!confirm("Czy na pewno chcesz usunąć swoje konto?")) return;
 
     try {
-      const response = await fetch("/api/user", {
+      const response = await fetch("/api/users", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: params.username }),

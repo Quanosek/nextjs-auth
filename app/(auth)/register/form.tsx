@@ -48,7 +48,7 @@ export default function FormComponent() {
       }
 
       // registration API call
-      const registerResponse = await fetch("/api/user", {
+      const registerResponse = await fetch("/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),

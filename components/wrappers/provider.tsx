@@ -6,7 +6,8 @@ import { SessionProvider } from "next-auth/react";
 
 // Fixed scroll-to-top on route change
 const useScrollToTop = () => {
-  useEffect(() => window.scrollTo(0, 0), [usePathname()]);
+  const pathname = usePathname();
+  useEffect(() => window.scrollTo(0, 0), [pathname]);
 };
 
 export default function SessionComponent({

@@ -1,6 +1,10 @@
 import Link from "next/link";
 import db from "@/lib/db";
 
+import pl from "date-and-time/locale/pl";
+import date from "date-and-time";
+date.locale(pl);
+
 import styles from "@/styles/blog.module.scss";
 
 export default async function BlogListPage() {
@@ -14,9 +18,8 @@ export default async function BlogListPage() {
 
       <div className={styles.postsGrid}>
         {posts.map(async (post: any) => {
-          const formattedDate = new Date(post.createdAt).toLocaleString(
-            "pl-PL"
-          );
+          const pattern = date.compile("HH:mm, DD MMM YYYY r.");
+          const formattedDate = date.format(post.createdAt, pattern);
 
           return (
             <Link key={post.id} href={`/blog/${post.id}`}>

@@ -42,7 +42,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       {
-        message: "Pomyślnie dodano nowy artykuł",
+        message: "Pomyślnie dodano nowy post",
         post: { ...post, author: user.username },
       },
       { status: 201 }

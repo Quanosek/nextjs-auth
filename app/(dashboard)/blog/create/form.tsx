@@ -15,20 +15,19 @@ interface FormValues {
 
 export default function FormComponent(params: { author: string }) {
   const { author } = params;
-  if (!author) return;
 
   const router = useRouter();
   const { handleSubmit, register } = useForm<FormValues>();
   const [submitting, setSubmitting] = useState(false); // loading state
 
   const onSubmitHandler: SubmitHandler<FormValues> = async (values) => {
-    if (!confirm("Czy na pewno chcesz opublikować ten artykuł?")) return;
+    if (!confirm("Czy na pewno chcesz opublikować ten post?")) return;
 
     try {
       setSubmitting(true);
 
       // registration API call
-      const response = await fetch("/api/blog", {
+      const response = await fetch("/api/posts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ author, ...values }),
@@ -37,7 +36,7 @@ export default function FormComponent(params: { author: string }) {
       const data = await response.json();
 
       if (response.ok) {
-        toast.success("Opublikowano nowy artykuł");
+        toast.success("Opublikowano nowy post");
         router.push(`/blog/${data.post.id}`);
         router.refresh();
       } else {
@@ -50,6 +49,8 @@ export default function FormComponent(params: { author: string }) {
       setSubmitting(false);
     }
   };
+
+  if (!author) return;
 
   return (
     <form

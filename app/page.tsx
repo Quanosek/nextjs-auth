@@ -1,12 +1,16 @@
 import Link from "next/link";
 import db from "@/lib/db";
 
+import pl from "date-and-time/locale/pl";
+import date from "date-and-time";
+date.locale(pl);
+
 import styles from "@/styles/home.module.scss";
 
 export default async function HomePage() {
   const posts = await db.posts.findMany({
     orderBy: { createdAt: "desc" },
-    take: 5,
+    take: 4,
   });
 
   return (
@@ -15,9 +19,8 @@ export default async function HomePage() {
 
       <div className={styles.postsList}>
         {posts.map((post) => {
-          const formattedDate = new Date(post.createdAt).toLocaleString(
-            "pl-PL"
-          );
+          const pattern = date.compile("HH:mm, DD MMM YYYY r.");
+          const formattedDate = date.format(post.createdAt, pattern);
 
           return (
             <Link
