@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
+import { auth } from "@/lib/auth";
 
 export async function GET() {
   try {
@@ -46,6 +47,36 @@ export async function POST(req: Request) {
         post: { ...post, author: user.username },
       },
       { status: 201 }
+    );
+  } catch (error) {
+    // return error message
+    return NextResponse.json(
+      { message: "Wystąpił nieoczekiwany błąd serwera", error },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req: Request) {
+  const { id } = await req.json();
+
+  try {
+    // only logged-in user authentication
+    const session = await auth();
+    if (!session) {
+      return NextResponse.json(
+        { message: "Nieuprawniony dostęp" },
+        { status: 401 }
+      );
+    }
+
+    // delete post
+    await db.posts.delete({ where: { id } });
+
+    // return success message
+    return NextResponse.json(
+      { message: "Pomyślnie usunięto post" },
+      { status: 200 }
     );
   } catch (error) {
     // return error message
