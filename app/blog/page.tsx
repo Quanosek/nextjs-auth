@@ -14,7 +14,7 @@ export default async function BlogListPage() {
 
   return (
     <main>
-      <h1>Wszystkie posty na blogu</h1>
+      <h1>Wszystkie posty:</h1>
 
       <div className={styles.postsGrid}>
         {posts.map(async (post) => {

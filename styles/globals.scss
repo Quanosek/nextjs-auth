@@ -1,9 +1,7 @@
-:root {
-  color-scheme: dark;
-}
+@import "./colors.scss";
 
 :focus-visible {
-  box-shadow: 0 0 1px 1px #ededed;
+  box-shadow: 0 0 1px 1px var(--primary);
 }
 
 ::placeholder {
@@ -13,9 +11,13 @@
 
 html,
 body {
-  color: #ededed;
-  background-color: #151515;
+  color: var(--primary);
+  background: linear-gradient(180deg, #181818, #0a0a0a);
   -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  position: relative;
 }
 
 $header-height: 3.5rem;
@@ -42,12 +44,11 @@ footer {
   padding: 0.5rem min(3%, 3rem);
   height: $header-height;
   width: 100%;
-  color: #ffffff;
-  background-color: rgba(#232323, 0.3);
+  color: var(--white);
 }
 
 header {
-  z-index: 1;
+  z-index: 10;
   position: fixed;
   top: 0;
   left: 0;
@@ -55,29 +56,108 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  backdrop-filter: blur(5px);
-
-  div {
-    height: 100%;
-    display: flex;
-    align-items: center;
-  }
+  background-color: rgba(#232323, 0.4);
+  backdrop-filter: blur(8px);
 
   a {
+    position: relative;
     padding: 0 12px;
     height: 100%;
     display: flex;
+    justify-content: center;
     align-items: center;
     border-radius: 4px;
     transition: 0.2s background-color ease-in-out;
+  }
 
-    &:hover {
-      background-color: #2b2b2b;
+  .title {
+    background-color: transparent !important;
+  }
+
+  .desktopLinks {
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+
+    a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 2.5px;
+      width: 100%;
+      border-radius: 30px;
+      background-color: var(--accent-hover);
+      transition: 0.2s transform ease-out;
+      filter: brightness(1.1);
+
+      transform: scaleX(0);
+      transform-origin: bottom right;
+    }
+
+    a:hover::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
     }
   }
 
-  form {
+  .hamburgerMenu {
+    padding: 0 12px;
     height: 100%;
+    width: auto;
+    display: flex;
+    align-items: center;
+
+    @media (min-width: 769px) {
+      display: none;
+    }
+
+    input {
+      z-index: 1;
+      position: relative;
+      height: 35px;
+      width: auto;
+      aspect-ratio: 1/1;
+      display: flex;
+      border-radius: 4px;
+      box-shadow: none !important; // remove focus border
+      cursor: pointer;
+
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: bottom center, 50%, 50%;
+    }
+
+    a {
+      user-select: none;
+    }
+  }
+}
+
+nav {
+  padding-top: 5rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background-color: rgba(#151515, 0.9);
+
+  a,
+  button {
+    padding: 12px 26px;
+    height: unset;
+    width: 60%;
+    text-align: center;
+    background-color: var(--button);
   }
 }
 
@@ -86,6 +166,7 @@ footer {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: var(--black);
 
   p {
     opacity: 80%;
@@ -109,37 +190,37 @@ button,
 .button {
   padding: 12px 26px;
   border-radius: 4px;
-  background-color: #232323;
+  background-color: var(--button);
   transition: 0.2s background-color ease-in-out;
 
   &:hover {
-    background-color: #2b2b2b;
+    background-color: var(--button-hover);
   }
 
   &.green {
-    color: #ffffff !important;
-    background-color: #24562e !important;
+    color: var(--white);
+    background-color: var(--green) !important;
 
     &:hover {
-      background-color: #31613a !important;
+      background-color: var(--green-hover);
     }
   }
 
   &.blue {
-    color: #ffffff !important;
-    background-color: #254869 !important;
+    color: var(--white);
+    background-color: var(--blue) !important;
 
     &:hover {
-      background-color: #23507b !important;
+      background-color: var(--blue-hover);
     }
   }
 
   &.red {
-    color: #ffffff !important;
-    background-color: #722424 !important;
+    color: var(--white);
+    background-color: var(--red) !important;
 
     &:hover {
-      background-color: #8d3636 !important;
+      background-color: var(--red-hover);
     }
   }
 }

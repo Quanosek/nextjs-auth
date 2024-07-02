@@ -1,5 +1,5 @@
 {
-  "version": "0.1.7",
+  "version": "0.1.8",
   "name": "nextjs-auth",
   "description": "Next.js Database Authentication with Auth.js and Prisma",
   "scripts": {
@@ -20,7 +20,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-google-recaptcha-v3": "^1.10.1",
-    "react-hook-form": "^7.52.0",
+    "react-hook-form": "^7.52.1",
     "react-hot-toast": "^2.4.1",
     "react-textarea-autosize": "^8.5.3",
     "the-new-css-reset": "^1.11.2",
@@ -35,6 +35,6 @@
     "eslint-config-next": "14.2.4",
     "prisma": "^5.16.1",
     "sass": "^1.77.6",
-    "typescript": "^5.5.2"
+    "typescript": "^5.5.3"
   }
 }

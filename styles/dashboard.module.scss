@@ -1,5 +1,6 @@
 .profile {
   gap: 2rem;
+  text-align: center;
 
   section {
     width: 25rem;
@@ -8,8 +9,8 @@
   }
 
   hr {
-    width: 35rem;
     height: 2px;
+    width: min(35rem, 100%);
     border-radius: 100%;
     background-color: #575757;
   }
@@ -54,14 +55,5 @@
   button {
     height: 2.5rem;
     width: 16rem;
-
-    &.redButton {
-      color: #ffffff;
-      background-color: #722424;
-
-      &:hover {
-        background-color: #8d3636;
-      }
-    }
   }
 }

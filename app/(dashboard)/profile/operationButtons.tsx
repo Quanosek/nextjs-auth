@@ -51,7 +51,7 @@ export default function OperationButtonsComponent(params: {
         <p>Wyloguj się</p>
       </button>
 
-      <button className={styles.redButton} onClick={deleteHandler}>
+      <button className="red" onClick={deleteHandler}>
         <p>Usuń konto</p>
       </button>
     </div>

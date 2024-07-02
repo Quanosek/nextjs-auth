@@ -1,3 +1,63 @@
+.welcome {
+  position: relative;
+  height: max(25rem, min(70svh, 60rem));
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  text-align: center;
+  font-size: 125%;
+  overflow: hidden;
+
+  h1 {
+    font-size: 250%;
+    user-select: none;
+    background-clip: text;
+    background-image: linear-gradient(350deg, #8c50ff, #ff8afa);
+    -webkit-text-fill-color: transparent;
+  }
+
+  p {
+    z-index: 1;
+    width: 65%;
+  }
+
+  a {
+    opacity: 65%;
+
+    &:hover {
+      opacity: 90%;
+      text-decoration: underline;
+    }
+  }
+
+  img {
+    opacity: 3%;
+    position: absolute;
+    top: -5vh;
+    right: 5vw;
+    height: 500px;
+    width: auto;
+    aspect-ratio: 1/1;
+    user-select: none;
+  }
+}
+
+.latestPosts {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  h2 {
+    width: 100%;
+    font-size: 180%;
+  }
+}
+
 .postsList {
   width: 100%;
   display: flex;
@@ -5,21 +65,33 @@
   gap: 6px;
 
   .post {
-    overflow: hidden;
+    position: relative;
     padding: 1.25rem 1rem;
-    width: 25%;
     height: 15rem;
+    width: 25%;
     display: flex;
     flex-direction: column;
     gap: 12px;
     text-align: left;
-    background-color: #232323;
+    background-color: var(--accent);
     border-radius: 4px;
-    transition: width 0.2s ease-in-out, filter 0.3s ease-out;
+    transition: width 0.2s ease-in-out, background-color 0.2s ease-out;
+
+    ::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+
+      $black: #000000;
+      background: linear-gradient(180deg, rgba($black, 0), rgba($black, 0.15));
+    }
 
     &:hover {
       width: 40%;
-      filter: brightness(1.1);
+      background-color: var(--accent-hover);
     }
 
     h2 {

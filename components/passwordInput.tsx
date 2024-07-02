@@ -29,6 +29,8 @@ export default function PasswordInputComponent(params: {
           alt=""
           height={24}
           width={24}
+          draggable={false}
+          priority
         />
       </button>
     </div>

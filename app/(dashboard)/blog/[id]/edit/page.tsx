@@ -19,7 +19,7 @@ export default async function EditPostPage({
 
   return (
     <main>
-      <h1>Edytuj post</h1>
+      <h1>Edycja postu:</h1>
       <Form post={post} />
     </main>
   );
