@@ -14,9 +14,12 @@ export default async function BlogListPage() {
 
   return (
     <main>
-      <h1>Wszystkie posty:</h1>
+      <div className={styles.blogTitle}>
+        <h1>Wszystkie posty</h1>
+        <hr className="accent-line" />
+      </div>
 
-      <div className={styles.postsGrid}>
+      <div className={styles.blogGrid}>
         {posts.map(async (post) => {
           const pattern = date.compile("HH:mm, DD MMM YYYY r.");
           const formattedDate = date.format(post.createdAt, pattern);

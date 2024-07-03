@@ -9,6 +9,7 @@ $input-height: 2.5rem;
   gap: 12px;
   color: var(--white);
   background-color: var(--button);
+  box-shadow: var(--shadow);
 
   label {
     display: flex;
@@ -51,6 +52,7 @@ $input-height: 2.5rem;
     justify-content: center;
     align-items: center;
     background-color: var(--button-bright);
+    box-shadow: none;
 
     &:hover {
       background-color: var(--button-bright-hover);

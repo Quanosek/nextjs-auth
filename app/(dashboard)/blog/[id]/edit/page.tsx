@@ -1,6 +1,8 @@
 import db from "@/lib/db";
 import Form from "./form";
 
+import styles from "@/styles/blog.module.scss";
+
 export default async function EditPostPage({
   params,
 }: {
@@ -18,8 +20,7 @@ export default async function EditPostPage({
   }
 
   return (
-    <main>
-      <h1>Edycja postu:</h1>
+    <main className={styles.studioBackground}>
       <Form post={post} />
     </main>
   );
