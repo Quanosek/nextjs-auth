@@ -1,6 +1,7 @@
 .welcome {
+  z-index: 1;
   position: relative;
-  height: max(25rem, min(70svh, 60rem));
+  min-height: min(65svh, 65rem);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -9,43 +10,43 @@
   gap: 3rem;
   text-align: center;
   font-size: 125%;
-  overflow: hidden;
 
   h1 {
     font-size: 250%;
     user-select: none;
     background-clip: text;
-    background-image: linear-gradient(350deg, #8c50ff, #ff8afa);
+    background-image: linear-gradient(
+      155deg,
+      var(--accent-hover),
+      var(--accent)
+    );
+    filter: brightness(1.5);
     -webkit-text-fill-color: transparent;
   }
 
-  p {
-    z-index: 1;
-    width: 75%;
-  }
-
   a {
-    opacity: 65%;
+    opacity: 75%;
 
     &:hover {
-      opacity: 90%;
+      opacity: 95%;
       text-decoration: underline;
     }
   }
 
   img {
+    z-index: -1;
     opacity: 3%;
     position: absolute;
     top: 0;
     right: 0;
     height: 500px;
     width: auto;
-    aspect-ratio: 1/1;
     user-select: none;
   }
 }
 
 .latestPosts {
+  margin-top: 5rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -60,15 +61,14 @@
 
 .postsList {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 6px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
+  grid-gap: 6px;
 
   .post {
     position: relative;
     padding: 1.25rem 1rem;
     height: 15rem;
-    width: 25%;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -76,7 +76,7 @@
     background-color: var(--accent);
     box-shadow: var(--shadow);
     border-radius: 4px;
-    transition: width 0.2s ease-in-out, background-color 0.2s ease-out;
+    transition: 0.2s background-color ease-out;
 
     ::after {
       content: "";
@@ -91,28 +91,26 @@
     }
 
     &:hover {
-      width: 40%;
       background-color: var(--accent-hover);
     }
 
     h2 {
       text-transform: uppercase;
-
       display: -webkit-box;
+      line-clamp: 1;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
 
     span {
-      opacity: 80%;
+      opacity: 75%;
       font-size: 90%;
     }
 
     p {
-      margin-top: 1rem;
-
       display: -webkit-box;
+      line-clamp: 3;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;

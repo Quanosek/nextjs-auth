@@ -8,9 +8,9 @@
 }
 
 .blogGrid {
-  width: 95%;
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
   gap: 6px;
 
   a {
@@ -25,7 +25,7 @@
     background-color: var(--button);
     box-shadow: var(--shadow);
     border-radius: 4px;
-    transition: 0.2s background-color ease-in-out;
+    transition: 0.2s background-color ease-out;
 
     ::after {
       content: "";
@@ -41,15 +41,15 @@
 
     h2 {
       text-transform: uppercase;
-
       display: -webkit-box;
+      line-clamp: 2;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
 
     span {
-      opacity: 80%;
+      opacity: 75%;
       font-size: 90%;
     }
 
@@ -71,6 +71,11 @@ $globalPadding: 1rem;
   display: flex;
   flex-direction: column;
 
+  @media (max-width: 768px) {
+    margin-top: 0;
+    width: 100%;
+  }
+
   textarea {
     margin-bottom: 0.5px !important;
     background-color: var(--button);
@@ -91,6 +96,11 @@ $globalPadding: 1rem;
     padding: $globalPadding;
     font-size: 200%;
     font-weight: bold;
+  }
+
+  h1 {
+    color: var(--accent);
+    filter: contrast(1.1) brightness(2.5);
   }
 
   p {
@@ -124,24 +134,5 @@ $globalPadding: 1rem;
 }
 
 .studioBackground {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
   background-color: #121212;
-
-  &::after {
-    content: "";
-    opacity: 10%;
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    height: 200%;
-    width: 200%;
-    background-image: url("/icons/grid.svg");
-    background-repeat: repeat;
-    background-size: auto 8%;
-    rotate: -22deg;
-    pointer-events: none;
-  }
 }

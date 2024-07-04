@@ -27,7 +27,7 @@ export default async function ProfilePage() {
           </Link>
 
           <Link href="/blog" className="button">
-            <p>Otwórz listę wszystkich postów</p>
+            <p>Lista wszystkich postów</p>
           </Link>
         </div>
       </section>

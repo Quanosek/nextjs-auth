@@ -1,13 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AccountButton from "./accountButton";
 
 export default function HamburgerMenu(params: { user: any }) {
   const { user } = params;
 
   const [showNav, setShowNav] = useState(false);
+
+  useEffect(() => {
+    if (showNav) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "unset";
+  }, [showNav]);
 
   return (
     <div className="hamburgerMenu">
@@ -30,9 +35,11 @@ export default function HamburgerMenu(params: { user: any }) {
         <Link href="/">
           <p>Strona główna</p>
         </Link>
+
         <Link href="/blog">
           <p>Blog</p>
         </Link>
+
         <AccountButton user={user} />
       </nav>
     </div>
