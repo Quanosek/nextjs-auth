@@ -2,6 +2,7 @@ import Link from "next/link";
 import { auth } from "@/lib/auth";
 import db from "@/lib/db";
 import DeleteButton from "./deleteButton";
+import AddComment from "./addComment";
 
 import pl from "date-and-time/locale/pl";
 import date from "date-and-time";
@@ -40,7 +41,10 @@ export default async function PostPage({ params }: { params: { id: string } }) {
         <div className={styles.titleContainer}>
           <h1 className={styles.title}>{post.title}</h1>
 
-          <p>{`@${post.author} • ${formattedDate}`}</p>
+          <p>
+            {`@${post.author} • `}
+            <span>{formattedDate}</span>
+          </p>
           <hr />
         </div>
 
@@ -55,6 +59,28 @@ export default async function PostPage({ params }: { params: { id: string } }) {
             <DeleteButton id={post.id} />
           </div>
         )}
+
+        {/* <div className={styles.commentsContainer}>
+          <h2>Komentarze: (1)</h2>
+          <hr />
+
+          <div className={styles.commentsList}>
+            <div>
+              <h3>
+                @username • <span>12:34, 12 gru 2021 r.</span>
+              </h3>
+              <p>Twój komentarz Twój komentarz Twój komentarz Twój komentarz</p>
+            </div>
+          </div>
+
+          {user && <AddComment />}
+
+          {!user && (
+            <Link href="/login" className="button blue">
+              Zaloguj się, aby dodać komentarz
+            </Link>
+          )}
+        </div> */}
       </div>
     </main>
   );

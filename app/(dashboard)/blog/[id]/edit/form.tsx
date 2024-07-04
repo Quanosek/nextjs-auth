@@ -69,7 +69,10 @@ export default function FormComponent(props: { post: any }) {
           required
         />
 
-        <p>{`@${post.author} • ${formattedDate} (aktualizacja: ${patternString})`}</p>
+        <p>
+          {`@${post.author} • `}
+          <span>{`${formattedDate} (aktualizacja: ${patternString})`}</span>
+        </p>
         <hr />
       </div>
 

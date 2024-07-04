@@ -203,29 +203,29 @@ button,
   }
 
   &.green {
-    color: var(--white);
+    color: var(--white) !important;
     background-color: var(--green) !important;
 
     &:hover {
-      background-color: var(--green-hover);
+      background-color: var(--green-hover) !important;
     }
   }
 
   &.blue {
-    color: var(--white);
+    color: var(--white) !important;
     background-color: var(--blue) !important;
 
     &:hover {
-      background-color: var(--blue-hover);
+      background-color: var(--blue-hover) !important;
     }
   }
 
   &.red {
-    color: var(--white);
+    color: var(--white) !important;
     background-color: var(--red) !important;
 
     &:hover {
-      background-color: var(--red-hover);
+      background-color: var(--red-hover) !important;
     }
   }
 }

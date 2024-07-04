@@ -29,17 +29,15 @@ export default function HamburgerMenu(params: { user: any }) {
       />
 
       <nav
-        onClick={() => setShowNav(false)}
+        onClick={() => setTimeout(() => setShowNav(false), 100)}
         style={{ display: showNav ? "flex" : "none" }}
       >
         <Link href="/">
           <p>Strona główna</p>
         </Link>
-
         <Link href="/blog">
           <p>Blog</p>
         </Link>
-
         <AccountButton user={user} />
       </nav>
     </div>
