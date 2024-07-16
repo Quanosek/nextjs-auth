@@ -45,7 +45,7 @@ export async function DELETE(req: Request) {
   const body = await req.json();
 
   try {
-    // only logged-in user authentication
+    // sign-in user authentication
     const session = await auth();
     if (!session) {
       return NextResponse.json(

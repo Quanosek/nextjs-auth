@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth";
 import db from "@/lib/db";
 
 export async function POST(req: Request) {
-  const { id, title, content } = await req.json();
+  const body = await req.json();
 
   try {
     // sign-in user authentication
@@ -15,16 +15,31 @@ export async function POST(req: Request) {
       );
     }
 
-    // update post
-    await db.posts.update({
-      where: { id },
-      data: { title, content },
+    const username = body.author.toLowerCase();
+    const user = await db.users.findUnique({ where: { username } });
+
+    // user not exist error
+    if (!user) {
+      return NextResponse.json(
+        { message: "Nie znaleziono konta użytkownika" },
+        { status: 400 }
+      );
+    }
+
+    // create new comment
+    const newComment = await db.comments.create({
+      data: body,
     });
 
     // return success message
+    const { author: _, ...comment } = newComment;
+
     return NextResponse.json(
-      { message: "Post został zaktualizowany" },
-      { status: 200 }
+      {
+        message: "Pomyślnie dodano nowy komentarz",
+        comment: { ...comment, author: user.username },
+      },
+      { status: 201 }
     );
   } catch (error) {
     // return error message

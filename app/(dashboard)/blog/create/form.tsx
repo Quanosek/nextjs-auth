@@ -35,9 +35,7 @@ export default function FormComponent(params: { author: string }) {
           router.push(`/blog/${response.data.post.id}`);
           router.refresh();
         })
-        .catch((err) => {
-          toast.error(err.response.data.message);
-        });
+        .catch((err) => toast.error(err.response.data.message));
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd, spróbuj ponownie");
       console.error(error);

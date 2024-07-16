@@ -20,9 +20,7 @@ export default function DeleteButtonComponent(props: { id: string }) {
           router.push("/blog");
           router.refresh();
         })
-        .catch((err) => {
-          toast.error(err.response.data.message);
-        });
+        .catch((err) => toast.error(err.response.data.message));
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd, spróbuj ponownie");
       console.error(error);

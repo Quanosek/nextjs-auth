@@ -35,6 +35,8 @@ export default async function PostPage({ params }: { params: { id: string } }) {
 
   const authorView = post.author === user?.username;
 
+  const comments = await db.comments.findMany({ where: { postId: post.id } });
+
   return (
     <main>
       <div className={styles.postLayout}>
@@ -60,27 +62,34 @@ export default async function PostPage({ params }: { params: { id: string } }) {
           </div>
         )}
 
-        {/* <div className={styles.commentsContainer}>
-          <h2>Komentarze: (1)</h2>
+        <div className={styles.commentsContainer}>
+          <h2>Komentarze: ({comments.length})</h2>
           <hr />
 
           <div className={styles.commentsList}>
-            <div>
-              <h3>
-                @username • <span>12:34, 12 gru 2021 r.</span>
-              </h3>
-              <p>Twój komentarz Twój komentarz Twój komentarz Twój komentarz</p>
-            </div>
+            {comments.map((comment) => (
+              <div key={comment.id} className={styles.comment}>
+                <h3>
+                  {`@${comment.author} • `}
+                  <span>{date.format(comment.createdAt, pattern)}</span>
+                </h3>
+                <p>{comment.text}</p>
+              </div>
+            ))}
+
+            {!comments.length && (
+              <p className={styles.noComments}>Brak komentarzy</p>
+            )}
           </div>
 
-          {user && <AddComment />}
+          {user && <AddComment postId={post.id} author={user.username} />}
 
           {!user && (
             <Link href="/login" className="button blue">
               Zaloguj się, aby dodać komentarz
             </Link>
           )}
-        </div> */}
+        </div>
       </div>
     </main>
   );

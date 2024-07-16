@@ -4,10 +4,10 @@ import db from "@/lib/db";
 import { compare, hash } from "bcrypt";
 
 export async function POST(req: Request) {
-  const body = await req.json();
+  const { user, currentPassword, newPassword } = await req.json();
 
   try {
-    // only logged-in user authentication
+    // sign-in user authentication
     const session = await auth();
     if (!session) {
       return NextResponse.json(
@@ -16,8 +16,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const username = body.username.toLowerCase();
-    const existingUser = await db.users.findUnique({ where: { username } });
+    const existingUser = await db.users.findUnique({ where: { id: user.id } });
 
     // user already exists error
     if (!existingUser) {
@@ -26,8 +25,6 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-
-    const { currentPassword, newPassword } = body;
 
     // incorrect current password error
     const passwordMatch = await compare(currentPassword, existingUser.password);
@@ -41,7 +38,7 @@ export async function POST(req: Request) {
     // secure new password value
     const hashedPassword = await hash(newPassword, 12);
     await db.users.update({
-      where: { username },
+      where: { id: user.id },
       data: { password: hashedPassword },
     });
 

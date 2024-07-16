@@ -38,7 +38,7 @@ export default async function ProfilePage() {
 
       <section className={styles.changePassword}>
         <h2>Zmień swoje hasło:</h2>
-        <ChangePassword username={user?.username} />
+        <ChangePassword user={user} />
       </section>
 
       <hr />

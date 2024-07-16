@@ -1,23 +1,40 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import TextareaAutosize from "react-textarea-autosize";
+import toast from "react-hot-toast";
+import axios from "axios";
 
-interface FormValues {
-  value: string;
+interface Props {
+  postId: string;
+  author: string;
 }
 
-export default function AddCommentComponent() {
-  const { handleSubmit, register } = useForm<FormValues>();
+interface FormValues {
+  text: string;
+}
+
+export default function AddCommentComponent(props: Props) {
+  const { postId, author } = props;
+  const router = useRouter();
+
+  const { reset, handleSubmit, register } = useForm<FormValues>();
   const [submitting, setSubmitting] = useState(false); // loading state
 
   const onSubmitHandler: SubmitHandler<FormValues> = async (values) => {
     try {
       setSubmitting(true);
 
-      console.log(values);
+      axios
+        .post("/api/comments", { ...values, author, postId })
+        .then(() => {
+          reset();
+          toast.success("Dodano nowy komentarz");
+          router.refresh();
+        })
+        .catch((err) => toast.error(err.response.data.message));
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd, spróbuj ponownie");
       console.error(error);
@@ -30,7 +47,7 @@ export default function AddCommentComponent() {
     <form onSubmit={handleSubmit(onSubmitHandler)}>
       <TextareaAutosize
         placeholder="Dodaj komentarz..."
-        {...register("value")}
+        {...register("text")}
         required
       />
 

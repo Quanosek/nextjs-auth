@@ -8,20 +8,32 @@ generator client {
 }
 
 model Users {
-    id        String   @id @default(uuid())
-    username  String   @unique
+    id        String     @id @default(uuid())
+    username  String     @unique
     password  String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    Post      Posts[]
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
+    Posts     Posts[]
+    Comments  Comments[]
 }
 
 model Posts {
-    id        String   @id @default(cuid())
+    id        String     @id @default(cuid())
     title     String
     content   String
-    user      Users    @relation(fields: [author], references: [username])
+    User      Users      @relation(fields: [author], references: [username])
     author    String
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
+    Comments  Comments[]
+}
+
+model Comments {
+    id        String   @id @default(cuid())
+    text      String
+    User      Users    @relation(fields: [author], references: [username])
+    author    String
+    Post      Posts    @relation(fields: [postId], references: [id])
+    postId    String
     createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
 }

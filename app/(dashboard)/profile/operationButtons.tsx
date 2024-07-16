@@ -34,9 +34,7 @@ export default function OperationButtonsComponent(params: {
           router.push("/");
           router.refresh();
         })
-        .catch((err) => {
-          toast.error(err.response.data.message);
-        });
+        .catch((err) => toast.error(err.response.data.message));
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd, spróbuj ponownie");
       console.error(error);

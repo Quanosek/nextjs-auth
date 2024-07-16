@@ -10,7 +10,14 @@ import PasswordInput from "@/components/passwordInput";
 
 import styles from "@/styles/forms.module.scss";
 
-export default function ChangePasswordComponent(params: { username: string }) {
+interface User {
+  id: string;
+  username: string;
+}
+
+export default function ChangePasswordComponent(params: { user: User | null }) {
+  const { user } = params;
+
   const {
     reset,
     handleSubmit,
@@ -36,16 +43,16 @@ export default function ChangePasswordComponent(params: { username: string }) {
 
       // update user password API request
       axios
-        .post("/api/users/password", { username: params.username, ...values })
+        .post("/api/users/password", { ...values, user })
         .then(() => {
-          reset({
-            currentPassword: "",
-            newPassword: "",
-            newPasswordConfirm: "",
-          });
+          reset();
           toast.success("Twoje hasło zostało zmienione");
         })
         .catch((err) => {
+          reset({
+            newPassword: "",
+            newPasswordConfirm: "",
+          });
           toast.error(err.response.data.message);
         });
     } catch (error) {
