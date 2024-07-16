@@ -26,7 +26,7 @@ export default function FormComponent(props: { post: any }) {
   const pattern = date.compile(patternString);
   const formattedDate = date.format(post.createdAt, pattern);
 
-  const { handleSubmit, register } = useForm<FormValues>();
+  const { reset, handleSubmit, register } = useForm<FormValues>();
   const [submitting, setSubmitting] = useState(false); // loading state
 
   const onSubmitHandler: SubmitHandler<FormValues> = async (values) => {
@@ -34,6 +34,13 @@ export default function FormComponent(props: { post: any }) {
 
     try {
       setSubmitting(true);
+
+      if (values.content.trim() === "" || values.title.trim() === "") {
+        reset();
+        toast.error("Pola nie mogą pozostać puste");
+        setSubmitting(false);
+        return;
+      }
 
       // update post API request
       axios

@@ -27,6 +27,13 @@ export default function AddCommentComponent(props: Props) {
     try {
       setSubmitting(true);
 
+      if (values.text.trim() === "") {
+        reset();
+        toast.error("Komentarz nie może być pusty");
+        setSubmitting(false);
+        return;
+      }
+
       axios
         .post("/api/comments", { ...values, author, postId })
         .then(() => {
