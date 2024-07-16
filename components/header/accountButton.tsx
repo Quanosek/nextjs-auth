@@ -3,9 +3,7 @@
 import Link from "next/link";
 
 export default function HeaderComponent(params: { user: any }) {
-  const { user } = params;
-
-  if (user) {
+  if (params.user) {
     return (
       <Link href="/profile">
         <p>Twoje konto</p>

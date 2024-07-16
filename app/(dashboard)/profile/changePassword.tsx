@@ -4,6 +4,7 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
+import axios from "axios";
 import { ChangePasswordInput, ChangePasswordSchema } from "@/lib/user-schema";
 import PasswordInput from "@/components/passwordInput";
 
@@ -33,19 +34,20 @@ export default function ChangePasswordComponent(params: { username: string }) {
         return;
       }
 
-      const response = await fetch("/api/users/password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: params.username, ...values }),
-      });
-
-      if (response.ok) {
-        reset({ currentPassword: "", newPassword: "", newPasswordConfirm: "" });
-        toast.success("Twoje hasło zostało zmienione");
-      } else {
-        const error = await response.json();
-        toast.error(error.message);
-      }
+      // update user password API request
+      axios
+        .post("/api/users/password", { username: params.username, ...values })
+        .then(() => {
+          reset({
+            currentPassword: "",
+            newPassword: "",
+            newPasswordConfirm: "",
+          });
+          toast.success("Twoje hasło zostało zmienione");
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+        });
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd, spróbuj ponownie");
       console.error(error);

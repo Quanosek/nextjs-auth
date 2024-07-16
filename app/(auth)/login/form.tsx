@@ -29,8 +29,6 @@ export default function FormComponent() {
   const [submitting, setSubmitting] = useState(false); // loading state
 
   const onSubmitHandler: SubmitHandler<LoginUserInput> = async (values) => {
-    const username = values.username.toLowerCase();
-
     if (!executeRecaptcha) {
       return toast.error("Wystąpił błąd podczas ładowania reCAPTCHA");
     }
@@ -49,6 +47,8 @@ export default function FormComponent() {
       if (!reCaptchaResponse.data.success) {
         return toast.error("Wystąpił błąd podczas weryfikacji reCAPTCHA");
       }
+
+      const username = values.username.toLowerCase();
 
       // sign in API verification
       const loginResponse = await signIn("credentials", {

@@ -47,21 +47,17 @@ export default function FormComponent() {
         return toast.error("Wystąpił błąd podczas weryfikacji reCAPTCHA");
       }
 
-      // registration API call
-      const registerResponse = await fetch("/api/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-
-      if (registerResponse.ok) {
-        toast.success("Pomyślnie utworzono nowe konto");
-        router.push("/login");
-      } else {
-        reset({ passwordConfirm: "" });
-        const error = await registerResponse.json();
-        toast.error(error.message);
-      }
+      // sign up API call
+      axios
+        .post("/api/users", values)
+        .then(() => {
+          toast.success("Pomyślnie utworzono nowe konto");
+          router.push("/login");
+        })
+        .catch((err) => {
+          reset({ passwordConfirm: "" });
+          toast.error(err.response.data.message);
+        });
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd, spróbuj ponownie");
       console.error(error);

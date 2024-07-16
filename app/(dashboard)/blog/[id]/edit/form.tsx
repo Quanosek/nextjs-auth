@@ -5,6 +5,7 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import TextareaAutosize from "react-textarea-autosize";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 import pl from "date-and-time/locale/pl";
 import date from "date-and-time";
@@ -18,7 +19,7 @@ interface FormValues {
 }
 
 export default function FormComponent(props: { post: any }) {
-  const post = props.post;
+  const { post } = props;
   const router = useRouter();
 
   const patternString = "HH:mm, DD MMM YYYY r.";
@@ -34,20 +35,17 @@ export default function FormComponent(props: { post: any }) {
     try {
       setSubmitting(true);
 
-      const response = await fetch("/api/posts/change", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: post.id, ...values }),
-      });
-
-      if (response.ok) {
-        toast.success("Post został zaktualizowany");
-        router.push(`/blog/${post.id}`);
-        router.refresh();
-      } else {
-        const error = await response.json();
-        toast.error(error.message);
-      }
+      // update post API request
+      axios
+        .post("/api/posts/change", { id: post.id, ...values })
+        .then(() => {
+          toast.success("Post został zaktualizowany");
+          router.push(`/blog/${post.id}`);
+          router.refresh();
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+        });
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd, spróbuj ponownie");
       console.error(error);

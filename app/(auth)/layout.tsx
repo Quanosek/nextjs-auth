@@ -10,7 +10,7 @@ export default async function AuthLayout({
   const session = await auth();
   const user = session?.user;
 
-  // hide category from logged-IN users
+  // hide category from sign-IN users
   if (user) return redirect("/profile");
 
   return <ReCaptchaWrapper>{children}</ReCaptchaWrapper>;

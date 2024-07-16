@@ -9,7 +9,7 @@ export default async function DashboardLayout({
   const session = await auth();
   const user = session?.user;
 
-  // hide category from logged-OUT users
+  // hide category from sign-OUT users
   if (!user) return redirect("/login");
 
   return <>{children}</>;

@@ -3,8 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import TextareaAutosize from "react-textarea-autosize";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 import styles from "@/styles/blog.module.scss";
 
@@ -26,22 +27,17 @@ export default function FormComponent(params: { author: string }) {
     try {
       setSubmitting(true);
 
-      // registration API call
-      const response = await fetch("/api/posts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ author, ...values }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        toast.success("Opublikowano nowy post");
-        router.push(`/blog/${data.post.id}`);
-        router.refresh();
-      } else {
-        toast.error(data.message);
-      }
+      // new post API request
+      axios
+        .post("/api/posts", { author, ...values })
+        .then((response) => {
+          toast.success("Opublikowano nowy post");
+          router.push(`/blog/${response.data.post.id}`);
+          router.refresh();
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+        });
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd, spróbuj ponownie");
       console.error(error);
@@ -49,8 +45,6 @@ export default function FormComponent(params: { author: string }) {
       setSubmitting(false);
     }
   };
-
-  if (!author) return;
 
   return (
     <form

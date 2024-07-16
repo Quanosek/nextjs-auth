@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { hash } from "bcrypt";
-import db from "@/lib/db";
 import { auth } from "@/lib/auth";
+import db from "@/lib/db";
+import { hash } from "bcrypt";
 
 export async function POST(req: Request) {
   const body = await req.json();

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import db from "@/lib/db";
 import { auth } from "@/lib/auth";
+import db from "@/lib/db";
 
 export async function POST(req: Request) {
   const { id, title, content } = await req.json();

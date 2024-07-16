@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 import styles from "@/styles/dashboard.module.scss";
 
@@ -24,21 +25,18 @@ export default function OperationButtonsComponent(params: {
     if (!confirm("Czy na pewno chcesz usunąć swoje konto?")) return;
 
     try {
-      const response = await fetch("/api/users", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: params.username }),
-      });
-
-      if (response.ok) {
-        await signOut({ redirect: false });
-        toast.success("Twoje konto zostało pomyślnie usunięte");
-        router.push("/");
-        router.refresh();
-      } else {
-        const error = await response.json();
-        toast.error(error.message);
-      }
+      // delete user account API request
+      axios
+        .delete("/api/users", { data: { username: params.username } })
+        .then(async () => {
+          await signOut({ redirect: false });
+          toast.success("Twoje konto zostało pomyślnie usunięte");
+          router.push("/");
+          router.refresh();
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+        });
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd, spróbuj ponownie");
       console.error(error);

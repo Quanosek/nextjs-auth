@@ -6,7 +6,7 @@ import { useState } from "react";
 import styles from "@/styles/forms.module.scss";
 
 export default function PasswordInputComponent(params: {
-  function: any;
+  function: Function;
   value: string;
 }) {
   const { function: register, value } = params;
