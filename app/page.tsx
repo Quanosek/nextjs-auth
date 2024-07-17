@@ -50,16 +50,12 @@ export default async function HomePage() {
         <h2>Najnowsze posty:</h2>
 
         <div className={styles.postsList}>
-          {posts.map((post) => {
+          {posts.map((post, i) => {
             const pattern = date.compile("HH:mm, DD MMM YYYY r.");
             const formattedDate = date.format(post.createdAt, pattern);
 
             return (
-              <Link
-                key={post.id}
-                href={`/blog/${post.id}`}
-                className={styles.post}
-              >
+              <Link key={i} href={`/blog/${post.id}`} className={styles.post}>
                 <h2>{post.title}</h2>
                 <span>{`@${post.author} • ${formattedDate}`}</span>
 

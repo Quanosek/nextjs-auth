@@ -28,9 +28,9 @@ export default async function ProfilePage() {
           <Link href="/blog" className="button">
             <p>Lista wszystkich postów</p>
           </Link>
-          {/* <Link href="/profile/comments" className="button">
+          <Link href="/profile/comments" className="button">
             <p>Twoje komentarze</p>
-          </Link> */}
+          </Link>
         </div>
       </section>
 

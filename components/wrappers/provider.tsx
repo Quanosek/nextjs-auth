@@ -4,10 +4,22 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { SessionProvider } from "next-auth/react";
 
-// Fixed scroll-to-top on route change
 const useScrollToTop = () => {
   const pathname = usePathname();
-  useEffect(() => window.scrollTo(0, 0), [pathname]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const elemId = document.location.hash.slice(1);
+
+    // scroll to element
+    if (elemId) {
+      const element = document.getElementById(elemId);
+      element?.scrollIntoView();
+    } else {
+      // scroll to top of page
+      window.scrollTo(0, 0);
+    }
+  }, [pathname]);
 };
 
 export default function SessionComponent({

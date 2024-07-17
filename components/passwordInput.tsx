@@ -21,6 +21,7 @@ export default function PasswordInputComponent(params: {
       <button
         tabIndex={-1}
         type="button"
+        name="toggle"
         className={styles.eyeIcon}
         onClick={() => setPasswordVisible(!passwordVisible)}
       >

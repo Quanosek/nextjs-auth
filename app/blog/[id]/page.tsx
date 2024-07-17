@@ -67,8 +67,8 @@ export default async function PostPage({ params }: { params: { id: string } }) {
           <hr />
 
           <div className={styles.commentsList}>
-            {comments.map((comment) => (
-              <div key={comment.id} className={styles.comment}>
+            {comments.map((comment, i) => (
+              <div key={i} id={comment.id} className={styles.comment}>
                 <h3>
                   {`@${comment.author} • `}
                   <span>{date.format(comment.createdAt, pattern)}</span>

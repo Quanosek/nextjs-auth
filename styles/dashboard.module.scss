@@ -57,3 +57,46 @@
     width: 16rem;
   }
 }
+
+.pageTitle {
+  margin-bottom: 1rem;
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.comments {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  a {
+    padding: 1rem 1.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    border-radius: 4px;
+    background-color: var(--button);
+    transition: 0.2s background-color ease-in-out;
+
+    &:hover {
+      background-color: var(--button-hover);
+    }
+
+    div {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      p {
+        opacity: 80%;
+        font-size: 90%;
+      }
+    }
+  }
+}

@@ -27,3 +27,8 @@ run whole project as dev:
 ```
 pnpm dev
 ```
+
+in every change in database and prisma scheme run:
+```
+pnpm exec prisma db push
+```
