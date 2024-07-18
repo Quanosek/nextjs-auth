@@ -53,6 +53,7 @@ export default function FormComponent({ author }: { author: string }) {
           className={styles.title}
           placeholder="Najlepsze domki w górach"
           {...register("title")}
+          maxLength={500}
           required
         />
 
@@ -67,6 +68,7 @@ export default function FormComponent({ author }: { author: string }) {
           corporis commodi quasi illum provident dolorum explicabo suscipit est
           cumque nesciunt. Dolorum?..."
         {...register("content")}
+        maxLength={50000}
         required
       />
 

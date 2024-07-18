@@ -73,7 +73,7 @@ export default function FormComponent() {
     >
       <label>
         <p>Login:</p>
-        <input {...register("username")} />
+        <input {...register("username")} maxLength={100} />
         {errors["username"] && <span>{errors["username"].message}</span>}
       </label>
 

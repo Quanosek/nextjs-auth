@@ -67,6 +67,7 @@ export default function FormComponent({ post }: any) {
           className={styles.title}
           defaultValue={post.title}
           {...register("title")}
+          maxLength={500}
           required
         />
 
@@ -81,6 +82,7 @@ export default function FormComponent({ post }: any) {
         className={styles.content}
         defaultValue={post.content}
         {...register("content")}
+        maxLength={50000}
         required
       />
 

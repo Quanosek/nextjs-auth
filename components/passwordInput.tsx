@@ -17,6 +17,7 @@ export default function PasswordInputComponent(params: {
       <input
         type={passwordVisible ? "text" : "password"}
         {...register(value)}
+        maxLength={100}
       />
       <button
         tabIndex={-1}

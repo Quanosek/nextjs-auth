@@ -54,6 +54,7 @@ export default function AddCommentComponent({
       <TextareaAutosize
         placeholder="Dodaj komentarz..."
         {...register("text")}
+        maxLength={1000}
         required
       />
 
