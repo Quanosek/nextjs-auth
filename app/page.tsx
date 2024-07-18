@@ -46,34 +46,36 @@ export default async function HomePage() {
         />
       </div>
 
-      <div className={styles.latestPosts}>
-        <h2>Najnowsze posty:</h2>
+      {posts.length > 0 && (
+        <div className={styles.latestPosts}>
+          <h2>Najnowsze posty:</h2>
 
-        <div className={styles.postsList}>
-          {posts.map((post, i) => {
-            const pattern = date.compile("HH:mm, DD MMM YYYY r.");
-            const formattedDate = date.format(post.createdAt, pattern);
+          <div className={styles.postsList}>
+            {posts.map((post, i) => {
+              const pattern = date.compile("HH:mm, DD MMM YYYY r.");
+              const formattedDate = date.format(post.createdAt, pattern);
 
-            return (
-              <Link
-                key={i}
-                href={`/blog/${post.id}`}
-                title={`"${post.title}"`}
-                className={styles.post}
-              >
-                <h2>{post.title}</h2>
-                <span>{`@${post.author} • ${formattedDate}`}</span>
+              return (
+                <Link
+                  key={i}
+                  href={`/blog/${post.id}`}
+                  title={`"${post.title}"`}
+                  className={styles.post}
+                >
+                  <h2>{post.title}</h2>
+                  <span>{`@${post.author} • ${formattedDate}`}</span>
 
-                <p>{post.content}</p>
-              </Link>
-            );
-          })}
+                  <p>{post.content}</p>
+                </Link>
+              );
+            })}
+          </div>
+
+          <Link href="/blog" className="button">
+            <p>Zobacz wszystkie posty</p>
+          </Link>
         </div>
-
-        <Link href="/blog" className="button">
-          <p>Zobacz wszystkie posty</p>
-        </Link>
-      </div>
+      )}
     </main>
   );
 }

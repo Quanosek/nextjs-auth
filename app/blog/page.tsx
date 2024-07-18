@@ -20,6 +20,8 @@ export default async function BlogPage() {
       </div>
 
       <div className={styles.blogGrid}>
+        {!posts.length && <h2 style={{ opacity: "65%" }}>brak postów</h2>}
+
         {posts.map(async (post, i) => {
           const pattern = date.compile("HH:mm, DD MMM YYYY r.");
           const formattedDate = date.format(post.createdAt, pattern);

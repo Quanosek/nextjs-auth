@@ -34,6 +34,10 @@ export default async function CommentsPage() {
       </div>
 
       <div className={styles.comments}>
+        {!comments.length && (
+          <h2 style={{ opacity: "65%" }}>brak komentarzy</h2>
+        )}
+
         {comments.map(async (comment, i) => {
           const post = await db.posts.findUnique({
             where: {
