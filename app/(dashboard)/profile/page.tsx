@@ -22,7 +22,7 @@ export default async function ProfilePage() {
         <h2>Działania na blogu:</h2>
 
         <div className={styles.buttons}>
-          <Link href="/blog/create" className="button">
+          <Link href="/blog/create" className="button blue">
             <p>Napisz nowy post</p>
           </Link>
           <Link href="/blog" className="button">

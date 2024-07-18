@@ -3,7 +3,7 @@ import Form from "./form";
 
 import styles from "@/styles/blog.module.scss";
 
-export default async function EditPostPage({
+export default async function PostEditPage({
   params,
 }: {
   params: { id: string };

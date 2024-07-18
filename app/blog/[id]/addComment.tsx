@@ -7,17 +7,17 @@ import TextareaAutosize from "react-textarea-autosize";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-interface Props {
-  postId: string;
-  author: string;
-}
-
 interface FormValues {
   text: string;
 }
 
-export default function AddCommentComponent(props: Props) {
-  const { postId, author } = props;
+export default function AddCommentComponent({
+  postId,
+  author,
+}: {
+  postId: string;
+  author: string;
+}) {
   const router = useRouter();
 
   const { reset, handleSubmit, register } = useForm<FormValues>();
@@ -30,7 +30,6 @@ export default function AddCommentComponent(props: Props) {
       if (values.text.trim() === "") {
         reset();
         toast.error("Komentarz nie może być pusty");
-        setSubmitting(false);
         return;
       }
 

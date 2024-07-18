@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Toaster } from "react-hot-toast";
 import { auth } from "@/lib/auth";
 import Provider from "@/components/wrappers/provider";
-import AccountButton from "@/components/header/accountButton";
+import LoginButton from "@/components/header/loginButton";
 import HamburgerMenu from "@/components/header/hamburgerMenu";
 
 import "@/styles/globals.scss";
@@ -25,6 +25,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
+  const user = session?.user as { id: string; username: string };
 
   return (
     <html lang="pl">
@@ -51,10 +52,10 @@ export default async function RootLayout({
               <Link href="/blog">
                 <p>Blog</p>
               </Link>
-              <AccountButton user={session?.user} />
+              <LoginButton user={user} />
             </div>
 
-            <HamburgerMenu user={session?.user} />
+            <HamburgerMenu user={user} />
           </header>
 
           {children}

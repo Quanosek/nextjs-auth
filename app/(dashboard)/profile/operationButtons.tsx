@@ -7,7 +7,9 @@ import axios from "axios";
 
 import styles from "@/styles/dashboard.module.scss";
 
-export default function OperationButtonsComponent(params: {
+export default function OperationButtonsComponent({
+  username,
+}: {
   username: string;
 }) {
   const router = useRouter();
@@ -27,7 +29,7 @@ export default function OperationButtonsComponent(params: {
     try {
       // delete user account API request
       axios
-        .delete("/api/users", { data: { username: params.username } })
+        .delete("/api/users", { data: { username } })
         .then(async () => {
           await signOut({ redirect: false });
           toast.success("Twoje konto zostało pomyślnie usunięte");

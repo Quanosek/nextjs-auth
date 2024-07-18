@@ -7,7 +7,7 @@ date.locale(pl);
 
 import styles from "@/styles/blog.module.scss";
 
-export default async function BlogListPage() {
+export default async function BlogPage() {
   const posts = await db.posts.findMany({
     orderBy: { createdAt: "desc" },
   });
@@ -25,7 +25,7 @@ export default async function BlogListPage() {
           const formattedDate = date.format(post.createdAt, pattern);
 
           return (
-            <Link key={i} href={`/blog/${post.id}`}>
+            <Link key={i} href={`/blog/${post.id}`} title={`"${post.title}"`}>
               <h2>{post.title}</h2>
               <span>{`@${post.author} • ${formattedDate}`}</span>
             </Link>

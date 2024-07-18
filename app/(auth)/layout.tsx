@@ -8,7 +8,7 @@ export default async function AuthLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
-  const user = session?.user;
+  const user = session?.user as { id: string; username: string };
 
   // hide category from sign-IN users
   if (user) return redirect("/profile");

@@ -71,7 +71,17 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 8px;
+}
+
+.comment {
+  $gap: 8px;
+
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: calc($gap / 2);
 
   a {
     padding: 1rem 1.5rem;
@@ -79,7 +89,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: 12px;
     border-radius: 4px;
     background-color: var(--button);
     transition: 0.2s background-color ease-in-out;
@@ -92,11 +102,34 @@
       width: 100%;
       display: flex;
       justify-content: space-between;
+      gap: $gap;
+
+      h2 {
+        text-align: start;
+      }
 
       p {
         opacity: 80%;
         font-size: 90%;
+        white-space: nowrap;
       }
+    }
+  }
+
+  button {
+    $padding: 3px;
+
+    opacity: 50%;
+    padding: $padding;
+    height: 25px + 2 * $padding;
+    aspect-ratio: 1/1;
+    border-radius: 4px;
+    background-color: transparent;
+    box-shadow: none;
+    transition: 0.2s opacity ease-in-out;
+
+    &:hover {
+      opacity: 90%;
     }
   }
 }

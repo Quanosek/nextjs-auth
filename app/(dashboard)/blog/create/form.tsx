@@ -14,10 +14,9 @@ interface FormValues {
   content: string;
 }
 
-export default function FormComponent(params: { author: string }) {
-  const { author } = params;
-
+export default function FormComponent({ author }: { author: string }) {
   const router = useRouter();
+
   const { handleSubmit, register } = useForm<FormValues>();
   const [submitting, setSubmitting] = useState(false); // loading state
 

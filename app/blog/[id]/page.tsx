@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import db from "@/lib/db";
-import DeleteButton from "./deleteButton";
 import AddComment from "./addComment";
+import DeleteButton from "./deleteButton";
+import LoginButton from "./loginButton";
 
 import pl from "date-and-time/locale/pl";
 import date from "date-and-time";
@@ -13,7 +14,7 @@ import styles from "@/styles/blog.module.scss";
 export default async function PostPage({ params }: { params: { id: string } }) {
   const { id } = params;
   const session = await auth();
-  const user = session?.user as { username: string } | null;
+  const user = session?.user as { id: string; username: string };
 
   const post = await db.posts.findUnique({ where: { id } });
   if (!post) {
@@ -83,12 +84,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
           </div>
 
           {user && <AddComment postId={post.id} author={user.username} />}
-
-          {!user && (
-            <Link href="/login" className="button blue">
-              Zaloguj się, aby dodać komentarz
-            </Link>
-          )}
+          {!user && <LoginButton postId={post.id} />}
         </div>
       </div>
     </main>

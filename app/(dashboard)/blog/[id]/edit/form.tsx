@@ -18,8 +18,7 @@ interface FormValues {
   content: string;
 }
 
-export default function FormComponent(props: { post: any }) {
-  const { post } = props;
+export default function FormComponent({ post }: any) {
   const router = useRouter();
 
   const patternString = "HH:mm, DD MMM YYYY r.";
@@ -38,7 +37,6 @@ export default function FormComponent(props: { post: any }) {
       if (values.content.trim() === "" || values.title.trim() === "") {
         reset();
         toast.error("Pola nie mogą pozostać puste");
-        setSubmitting(false);
         return;
       }
 
@@ -47,7 +45,7 @@ export default function FormComponent(props: { post: any }) {
         .post("/api/posts/change", { id: post.id, ...values })
         .then(() => {
           toast.success("Post został zaktualizowany");
-          router.push(`/blog/${post.id}`);
+          router.replace(`/blog/${post.id}`);
           router.refresh();
         })
         .catch((err) => toast.error(err.response.data.message));

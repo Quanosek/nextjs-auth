@@ -49,3 +49,33 @@ export async function POST(req: Request) {
     );
   }
 }
+
+export async function DELETE(req: Request) {
+  const { id } = await req.json();
+
+  try {
+    // sign-in user authentication
+    const session = await auth();
+    if (!session) {
+      return NextResponse.json(
+        { message: "Nieuprawniony dostęp" },
+        { status: 401 }
+      );
+    }
+
+    // delete post
+    await db.comments.delete({ where: { id } });
+
+    // return success message
+    return NextResponse.json(
+      { message: "Pomyślnie usunięto komentarz" },
+      { status: 200 }
+    );
+  } catch (error) {
+    // return error message
+    return NextResponse.json(
+      { message: "Wystąpił nieoczekiwany błąd serwera", error },
+      { status: 500 }
+    );
+  }
+}

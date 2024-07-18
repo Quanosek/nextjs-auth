@@ -15,7 +15,6 @@ import styles from "@/styles/forms.module.scss";
 
 export default function FormComponent() {
   const router = useRouter();
-  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const {
     reset,
@@ -26,6 +25,7 @@ export default function FormComponent() {
     resolver: zodResolver(loginUserSchema),
   });
 
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const [submitting, setSubmitting] = useState(false); // loading state
 
   const onSubmitHandler: SubmitHandler<LoginUserInput> = async (values) => {
@@ -62,8 +62,13 @@ export default function FormComponent() {
         toast.error("Niepoprawny adres e-mail lub hasło");
       } else {
         toast.success(`Witaj ponownie, @${username}!`);
-        router.push("/profile");
+        const redirect = localStorage.getItem("redirect");
+
+        if (redirect) router.push(redirect);
+        else router.push("/profile");
+
         router.refresh();
+        localStorage.clear();
       }
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd, spróbuj ponownie");

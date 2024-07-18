@@ -10,14 +10,11 @@ import PasswordInput from "@/components/passwordInput";
 
 import styles from "@/styles/forms.module.scss";
 
-interface User {
-  id: string;
-  username: string;
-}
-
-export default function ChangePasswordComponent(params: { user: User | null }) {
-  const { user } = params;
-
+export default function ChangePasswordComponent({
+  user,
+}: {
+  user: { id: string; username: string } | undefined;
+}) {
   const {
     reset,
     handleSubmit,

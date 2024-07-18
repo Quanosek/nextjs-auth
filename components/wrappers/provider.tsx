@@ -4,11 +4,14 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { SessionProvider } from "next-auth/react";
 
-const useScrollToTop = () => {
+export default function SessionWrapper({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
     const elemId = document.location.hash.slice(1);
 
     // scroll to element
@@ -20,14 +23,6 @@ const useScrollToTop = () => {
       window.scrollTo(0, 0);
     }
   }, [pathname]);
-};
-
-export default function SessionComponent({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  useScrollToTop();
 
   return <SessionProvider>{children}</SessionProvider>;
 }

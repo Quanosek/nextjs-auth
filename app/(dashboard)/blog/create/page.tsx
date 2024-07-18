@@ -3,9 +3,9 @@ import Form from "./form";
 
 import styles from "@/styles/blog.module.scss";
 
-export default async function BlogCreatePage() {
+export default async function PostCreatePage() {
   const session = await auth();
-  const user = session?.user as any;
+  const user = session?.user as { id: string; username: string };
 
   return (
     <main className={styles.studioBackground}>

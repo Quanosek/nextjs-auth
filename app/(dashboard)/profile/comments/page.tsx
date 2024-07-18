@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import db from "@/lib/db";
+import DeleteButton from "./deleteButton";
 
 import pl from "date-and-time/locale/pl";
 import date from "date-and-time";
@@ -10,7 +11,7 @@ import styles from "@/styles/dashboard.module.scss";
 
 export default async function CommentsPage() {
   const session = await auth();
-  const user = session?.user as { username: string } | null;
+  const user = session?.user as { id: string; username: string };
 
   const comments = await db.comments.findMany({
     where: {
@@ -41,20 +42,24 @@ export default async function CommentsPage() {
           });
 
           return (
-            <Link key={i} href={`/blog/${comment.postId}#${comment.id}`}>
-              <div>
-                <h2>{comment.text}</h2>
-                <p className={styles.date}>
-                  {date.format(comment.createdAt, pattern)}
-                </p>
-              </div>
+            <div key={i} className={styles.comment}>
+              <Link href={`/blog/${comment.postId}#${comment.id}`}>
+                <div>
+                  <h2>{comment.text}</h2>
+                  <p className={styles.date}>
+                    {date.format(comment.createdAt, pattern)}
+                  </p>
+                </div>
 
-              <p>
-                Post: {'"'}
-                {post?.title}
-                {'"'}
-              </p>
-            </Link>
+                <p>
+                  Post: {'"'}
+                  {post?.title}
+                  {'"'}
+                </p>
+              </Link>
+
+              <DeleteButton id={comment.id} />
+            </div>
           );
         })}
       </div>

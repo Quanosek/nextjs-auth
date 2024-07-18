@@ -55,7 +55,12 @@ export default async function HomePage() {
             const formattedDate = date.format(post.createdAt, pattern);
 
             return (
-              <Link key={i} href={`/blog/${post.id}`} className={styles.post}>
+              <Link
+                key={i}
+                href={`/blog/${post.id}`}
+                title={`"${post.title}"`}
+                className={styles.post}
+              >
                 <h2>{post.title}</h2>
                 <span>{`@${post.author} • ${formattedDate}`}</span>
 

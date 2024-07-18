@@ -2,7 +2,7 @@
 
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
-export default function ReCaptchaComponent({
+export default function ReCaptchaWrapper({
   children,
 }: {
   children: React.ReactNode;

@@ -7,7 +7,7 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
-  const user = session?.user;
+  const user = session?.user as { id: string; username: string };
 
   // hide category from sign-OUT users
   if (!user) return redirect("/login");

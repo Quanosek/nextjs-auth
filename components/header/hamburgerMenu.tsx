@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import AccountButton from "./accountButton";
+import LoginButton from "./loginButton";
 
-export default function HamburgerMenu(params: any) {
+export default function HamburgerMenuComponent({ user }: any) {
   const [showNav, setShowNav] = useState(false);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function HamburgerMenu(params: any) {
         <Link href="/blog">
           <p>Blog</p>
         </Link>
-        <AccountButton user={params.user} />
+        <LoginButton user={user} />
       </nav>
     </div>
   );

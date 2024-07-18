@@ -6,7 +6,7 @@
 }
 
 :focus-visible {
-  box-shadow: 0 0 1px 1px var(--primary);
+  box-shadow: 0 0 1px 1px var(--primary) !important;
 }
 
 ::placeholder {
@@ -184,22 +184,23 @@ h2 {
   font-weight: bold;
 }
 
-a,
-button {
-  text-align: center;
-  cursor: pointer !important;
-}
-
 button,
 .button {
   padding: 12px 26px;
   border-radius: 30px;
+  text-align: center;
   background-color: var(--button);
   box-shadow: var(--shadow);
   transition: 0.2s background-color ease-in-out;
+  cursor: pointer !important;
 
   &:hover {
     background-color: var(--button-hover);
+  }
+
+  &:disabled {
+    filter: brightness(0.8) contrast(1.05);
+    cursor: not-allowed !important;
   }
 
   &.green {

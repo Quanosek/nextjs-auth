@@ -14,7 +14,6 @@ import styles from "@/styles/forms.module.scss";
 
 export default function FormComponent() {
   const router = useRouter();
-  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const {
     reset,
@@ -25,6 +24,7 @@ export default function FormComponent() {
     resolver: zodResolver(registerUserSchema),
   });
 
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const [submitting, setSubmitting] = useState(false); // loading state
 
   const onSubmitHandler: SubmitHandler<RegisterUserInput> = async (values) => {
