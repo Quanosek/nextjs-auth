@@ -73,7 +73,11 @@ export default function FormComponent() {
     >
       <label>
         <p>Login:</p>
-        <input {...register("username")} maxLength={100} />
+        <input
+          {...register("username")}
+          maxLength={100}
+          autoComplete="username"
+        />
         {errors["username"] && <span>{errors["username"].message}</span>}
       </label>
 

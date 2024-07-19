@@ -1,22 +1,31 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import styles from "@/styles/forms.module.scss";
 
-export default function PasswordInputComponent(params: {
+export default function PasswordInputComponent({
+  function: register,
+  value,
+}: {
   function: Function;
   value: string;
 }) {
-  const { function: register, value } = params;
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const type = useRef("off");
+  if (value === "newPassword") type.current = "new-password";
+  else if (value === "currentPassword" || "password") {
+    type.current = "current-password";
+  }
 
   return (
     <div className={styles.passwordInput}>
       <input
         type={passwordVisible ? "text" : "password"}
         {...register(value)}
+        autoComplete={type.current}
         maxLength={100}
       />
       <button
