@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import db from "@/lib/db";
-import DeleteComment from "@/components/deleteComment";
+import DeletePost from "./deletePost";
 
 import pl from "date-and-time/locale/pl";
 import date from "date-and-time";
@@ -9,11 +9,11 @@ date.locale(pl);
 
 import styles from "@/styles/dashboard.module.scss";
 
-export default async function ProfileCommentsPage() {
+export default async function ProfilePostsPage() {
   const session = await auth();
   const user = session?.user as { id: string; username: string };
 
-  const comments = await db.comments.findMany({
+  const posts = await db.posts.findMany({
     where: { author: { equals: user?.username } },
     orderBy: { createdAt: "desc" },
   });
@@ -23,38 +23,32 @@ export default async function ProfileCommentsPage() {
   return (
     <main>
       <div className={styles.pageTitle}>
-        <h1>Twoje komentarze</h1>
+        <h1>Twoje posty</h1>
         <hr className="accent-line" />
       </div>
 
       <div className={styles.comments}>
-        {!comments.length && (
-          <h2 style={{ opacity: "65%" }}>brak komentarzy</h2>
-        )}
+        {!posts.length && <h2 style={{ opacity: "65%" }}>brak postów</h2>}
 
-        {comments.map(async (comment, i) => {
+        {posts.map(async (posts, i) => {
           const post = await db.posts.findUnique({
-            where: { id: comment.postId },
+            where: { id: posts.id },
           });
 
           return (
             <div key={i} className={styles.comment}>
-              <Link href={`/blog/${comment.postId}#${comment.id}`}>
+              <Link href={`/blog/${posts.id}#${posts.id}`}>
                 <div>
-                  <h2>{comment.text}</h2>
+                  <h2>{posts.title}</h2>
                   <p className={styles.date}>
-                    {date.format(comment.createdAt, pattern)}
+                    {date.format(posts.createdAt, pattern)}
                   </p>
                 </div>
 
-                <p>
-                  Post: {'"'}
-                  {post?.title}
-                  {'"'}
-                </p>
+                <p>{post?.content}</p>
               </Link>
 
-              <DeleteComment id={comment.id} />
+              <DeletePost id={posts.id} />
             </div>
           );
         })}

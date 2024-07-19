@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { signOut } from "next-auth/react";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -13,6 +14,8 @@ export default function OperationButtonsComponent({
   username: string;
 }) {
   const router = useRouter();
+
+  const [submitting, setSubmitting] = useState(false); // loading state
 
   const logoutHandler = async () => {
     if (!confirm("Czy na pewno chcesz się wylogować?")) return;
@@ -27,6 +30,8 @@ export default function OperationButtonsComponent({
     if (!confirm("Czy na pewno chcesz usunąć swoje konto?")) return;
 
     try {
+      setSubmitting(true);
+
       // delete user account API request
       axios
         .delete("/api/users", { data: { username } })
@@ -40,6 +45,8 @@ export default function OperationButtonsComponent({
     } catch (error) {
       toast.error("Wystąpił nieoczekiwany błąd, spróbuj ponownie");
       console.error(error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -49,8 +56,8 @@ export default function OperationButtonsComponent({
         <p>Wyloguj się</p>
       </button>
 
-      <button className="red" onClick={deleteHandler}>
-        <p>Usuń konto</p>
+      <button className="red" onClick={deleteHandler} disabled={submitting}>
+        <p>{submitting ? "Ładowanie..." : "Usuń konto"}</p>
       </button>
     </div>
   );

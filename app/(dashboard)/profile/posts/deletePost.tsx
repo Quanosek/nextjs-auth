@@ -5,18 +5,18 @@ import Image from "next/image";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 
-export default function DeleteCommentComponent({ id }: { id: string }) {
+export default function DeletePostComponent({ id }: { id: string }) {
   const router = useRouter();
 
   const deleteComment = async () => {
-    if (!confirm("Czy na pewno chcesz usunąć ten komentarz?")) return;
+    if (!confirm("Czy na pewno chcesz usunąć ten post?")) return;
 
     try {
       // delete post API request
       axios
-        .delete("/api/comments", { data: { id } })
+        .delete("/api/posts", { data: { id } })
         .then(() => {
-          toast.success("Komentarz został pomyślnie usunięty");
+          toast.success("Post został pomyślnie usunięty");
           router.refresh();
         })
         .catch((err) => toast.error(err.response.data.message));
@@ -27,7 +27,7 @@ export default function DeleteCommentComponent({ id }: { id: string }) {
   };
 
   return (
-    <button title="Usuń komentarz" onClick={deleteComment}>
+    <button title="Usuń post" onClick={deleteComment}>
       <Image
         src="/icons/delete.svg"
         alt="x"

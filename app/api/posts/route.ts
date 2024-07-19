@@ -70,8 +70,9 @@ export async function DELETE(req: Request) {
       );
     }
 
-    // delete post
-    await db.posts.delete({ where: { id } });
+    // database update
+    await db.comments.deleteMany({ where: { postId: id } }); // delete all comments of post
+    await db.posts.delete({ where: { id } }); // delete post
 
     // return success message
     return NextResponse.json(

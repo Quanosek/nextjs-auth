@@ -65,7 +65,20 @@ export async function DELETE(req: Request) {
       );
     }
 
-    // delete user
+    // delete user comments
+    await db.comments.deleteMany({ where: { author: username } });
+
+    // delete comments under user posts
+    const posts = await db.posts.findMany({ where: { author: username } });
+
+    for (const post of posts) {
+      await db.comments.deleteMany({ where: { postId: post.id } });
+    }
+
+    // delete user posts
+    await db.posts.deleteMany({ where: { author: username } });
+
+    // delete user account
     await db.users.delete({ where: { username } });
 
     // return success message
