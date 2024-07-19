@@ -7,6 +7,8 @@ import TextareaAutosize from "react-textarea-autosize";
 import toast from "react-hot-toast";
 import axios from "axios";
 
+import styles from "@/styles/blog.module.scss";
+
 interface FormValues {
   text: string;
 }
@@ -50,7 +52,10 @@ export default function AddCommentComponent({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmitHandler)}>
+    <form
+      className={styles.newComment}
+      onSubmit={handleSubmit(onSubmitHandler)}
+    >
       <TextareaAutosize
         placeholder="Dodaj komentarz..."
         {...register("text")}

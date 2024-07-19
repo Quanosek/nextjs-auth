@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import db from "@/lib/db";
-import DeleteButton from "./deleteButton";
+import DeleteComment from "@/components/deleteComment";
 
 import pl from "date-and-time/locale/pl";
 import date from "date-and-time";
@@ -62,7 +62,7 @@ export default async function CommentsPage() {
                 </p>
               </Link>
 
-              <DeleteButton id={comment.id} />
+              <DeleteComment id={comment.id} />
             </div>
           );
         })}

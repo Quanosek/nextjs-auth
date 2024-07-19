@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-export default function DeleteButtonComponent({ id }: { id: string }) {
+export default function DeletePostComponent({ id }: { id: string }) {
   const router = useRouter();
 
   const clickHandler = async () => {

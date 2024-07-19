@@ -2,8 +2,9 @@ import Link from "next/link";
 import { auth } from "@/lib/auth";
 import db from "@/lib/db";
 import AddComment from "./addComment";
-import DeleteButton from "./deleteButton";
+import DeletePost from "./deletePost";
 import LoginButton from "./loginButton";
+import DeleteComment from "@/components/deleteComment";
 
 import pl from "date-and-time/locale/pl";
 import date from "date-and-time";
@@ -59,7 +60,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
               <p>Edytuj treść</p>
             </Link>
 
-            <DeleteButton id={post.id} />
+            <DeletePost id={post.id} />
           </div>
         )}
 
@@ -68,19 +69,23 @@ export default async function PostPage({ params }: { params: { id: string } }) {
           <hr />
 
           <div className={styles.commentsList}>
-            {comments.map((comment, i) => (
-              <div key={i} id={comment.id} className={styles.comment}>
-                <h3>
-                  {`@${comment.author} • `}
-                  <span>{date.format(comment.createdAt, pattern)}</span>
-                </h3>
-                <p>{comment.text}</p>
-              </div>
-            ))}
-
             {!comments.length && (
               <p className={styles.noComments}>Brak komentarzy</p>
             )}
+
+            {comments.map((comment, i) => (
+              <div key={i} id={comment.id}>
+                <div className={styles.comment}>
+                  <h3>
+                    {`@${comment.author} • `}
+                    <span>{date.format(comment.createdAt, pattern)}</span>
+                  </h3>
+                  <p>{comment.text}</p>
+                </div>
+
+                {authorView && <DeleteComment id={comment.id} />}
+              </div>
+            ))}
           </div>
 
           {user && <AddComment postId={post.id} author={user.username} />}
