@@ -59,6 +59,7 @@ export default function AddCommentComponent({
       <TextareaAutosize
         placeholder="Dodaj komentarz..."
         {...register("text")}
+        onChange={(e) => (e.target.value = e.target.value.replace(/\s+/g, " "))}
         maxLength={1000}
         required
       />

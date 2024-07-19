@@ -40,6 +40,8 @@ export default function FormComponent({ post }: any) {
         return;
       }
 
+      values.content = values.content.trim();
+
       // update post API request
       axios
         .post("/api/posts/change", { id: post.id, ...values })
@@ -67,6 +69,11 @@ export default function FormComponent({ post }: any) {
           className={styles.title}
           defaultValue={post.title}
           {...register("title")}
+          onChange={(e) => {
+            e.target.value = e.target.value
+              .replace(/\n/g, " ")
+              .replace(/\s+/g, " ");
+          }}
           maxLength={500}
           required
         />

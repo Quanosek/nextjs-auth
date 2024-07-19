@@ -27,7 +27,7 @@ export default async function ProfilePostsPage() {
         <hr className="accent-line" />
       </div>
 
-      <div className={styles.comments}>
+      <div className={styles.list}>
         {!posts.length && <h2 style={{ opacity: "65%" }}>brak postów</h2>}
 
         {posts.map(async (posts, i) => {
@@ -36,7 +36,7 @@ export default async function ProfilePostsPage() {
           });
 
           return (
-            <div key={i} className={styles.comment}>
+            <div key={i} className={styles.listElement}>
               <Link href={`/blog/${posts.id}#${posts.id}`}>
                 <div>
                   <h2>{posts.title}</h2>
@@ -45,7 +45,7 @@ export default async function ProfilePostsPage() {
                   </p>
                 </div>
 
-                <p>{post?.content}</p>
+                <p className={styles.text}>{post?.content}</p>
               </Link>
 
               <DeletePost id={posts.id} />

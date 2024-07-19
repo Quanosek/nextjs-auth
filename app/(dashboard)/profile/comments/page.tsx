@@ -27,7 +27,7 @@ export default async function ProfileCommentsPage() {
         <hr className="accent-line" />
       </div>
 
-      <div className={styles.comments}>
+      <div className={styles.list}>
         {!comments.length && (
           <h2 style={{ opacity: "65%" }}>brak komentarzy</h2>
         )}
@@ -38,7 +38,7 @@ export default async function ProfileCommentsPage() {
           });
 
           return (
-            <div key={i} className={styles.comment}>
+            <div key={i} className={styles.listElement}>
               <Link href={`/blog/${comment.postId}#${comment.id}`}>
                 <div>
                   <h2>{comment.text}</h2>
@@ -47,7 +47,7 @@ export default async function ProfileCommentsPage() {
                   </p>
                 </div>
 
-                <p>
+                <p className={styles.text}>
                   Post: {'"'}
                   {post?.title}
                   {'"'}

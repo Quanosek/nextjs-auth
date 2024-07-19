@@ -1,6 +1,6 @@
 .pageTitle {
   margin-bottom: 1rem;
-  width: 75%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,6 +43,7 @@
 
     h2 {
       text-transform: uppercase;
+
       display: -webkit-box;
       line-clamp: 2;
       -webkit-line-clamp: 2;
@@ -132,6 +133,7 @@ $globalPadding: 1rem;
   width: 100%;
   font-size: 110%;
   color: var(--white);
+  white-space: break-spaces;
 }
 
 .actionButtons {

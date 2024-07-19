@@ -17,7 +17,7 @@ interface FormValues {
 export default function FormComponent({ author }: { author: string }) {
   const router = useRouter();
 
-  const { handleSubmit, register } = useForm<FormValues>();
+  const { reset, handleSubmit, register } = useForm<FormValues>();
   const [submitting, setSubmitting] = useState(false); // loading state
 
   const onSubmitHandler: SubmitHandler<FormValues> = async (values) => {
@@ -25,6 +25,14 @@ export default function FormComponent({ author }: { author: string }) {
 
     try {
       setSubmitting(true);
+
+      if (values.content.trim() === "" || values.title.trim() === "") {
+        reset();
+        toast.error("Pola nie mogą pozostać puste");
+        return;
+      }
+
+      values.content = values.content.trim();
 
       // new post API request
       axios
@@ -53,6 +61,11 @@ export default function FormComponent({ author }: { author: string }) {
           className={styles.title}
           placeholder="Najlepsze domki w górach"
           {...register("title")}
+          onChange={(e) => {
+            e.target.value = e.target.value
+              .replace(/\n/g, " ")
+              .replace(/\s+/g, " ");
+          }}
           maxLength={500}
           required
         />
