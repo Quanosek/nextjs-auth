@@ -30,7 +30,7 @@ export default function DeletePostComponent({ id }: { id: string }) {
     <button title="Usuń post" onClick={deleteComment}>
       <Image
         src="/icons/delete.svg"
-        alt="x"
+        alt=""
         width={25}
         height={25}
         draggable={false}

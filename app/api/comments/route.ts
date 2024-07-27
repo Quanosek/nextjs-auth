@@ -1,24 +1,17 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/lib/auth";
 import db from "@/lib/db";
+import Session from "@/lib/api/session";
 
 export async function POST(req: Request) {
-  const body = await req.json();
+  const data = await req.json();
 
   try {
-    // sign-in user authentication
-    const session = await auth();
-    if (!session) {
-      return NextResponse.json(
-        { message: "Nieuprawniony dostęp" },
-        { status: 401 }
-      );
-    }
+    Session();
 
-    const username = body.author.toLowerCase();
+    const username = data.author.toLowerCase();
     const user = await db.users.findUnique({ where: { username } });
 
-    // user not exist error
+    // user not exist
     if (!user) {
       return NextResponse.json(
         { message: "Nie znaleziono konta użytkownika" },
@@ -26,23 +19,14 @@ export async function POST(req: Request) {
       );
     }
 
-    // create new comment
-    const newComment = await db.comments.create({
-      data: body,
-    });
-
-    // return success message
-    const { author: _, ...comment } = newComment;
+    // new comment
+    const comment = await db.comments.create({ data });
 
     return NextResponse.json(
-      {
-        message: "Pomyślnie dodano nowy komentarz",
-        comment: { ...comment, author: user.username },
-      },
+      { message: "Pomyślnie dodano nowy komentarz", comment },
       { status: 201 }
     );
   } catch (error) {
-    // return error message
     return NextResponse.json(
       { message: "Wystąpił nieoczekiwany błąd serwera", error },
       { status: 500 }
@@ -54,25 +38,16 @@ export async function DELETE(req: Request) {
   const { id } = await req.json();
 
   try {
-    // sign-in user authentication
-    const session = await auth();
-    if (!session) {
-      return NextResponse.json(
-        { message: "Nieuprawniony dostęp" },
-        { status: 401 }
-      );
-    }
+    Session();
 
-    // delete post
-    await db.comments.delete({ where: { id } });
+    // delete comment
+    const comment = await db.comments.delete({ where: { id } });
 
-    // return success message
     return NextResponse.json(
-      { message: "Pomyślnie usunięto komentarz" },
+      { message: "Pomyślnie usunięto komentarz", comment },
       { status: 200 }
     );
   } catch (error) {
-    // return error message
     return NextResponse.json(
       { message: "Wystąpił nieoczekiwany błąd serwera", error },
       { status: 500 }

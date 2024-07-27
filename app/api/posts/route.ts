@@ -1,16 +1,14 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/lib/auth";
 import db from "@/lib/db";
+import Session from "@/lib/api/session";
 
 export async function GET() {
   try {
-    // get all posts
+    // all posts list
     const posts = await db.posts.findMany();
 
-    // return success message
     return NextResponse.json({ posts }, { status: 200 });
   } catch (error) {
-    // return error message
     return NextResponse.json(
       { message: "Wystąpił nieoczekiwany błąd serwera", error },
       { status: 500 }
@@ -19,13 +17,15 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const body = await req.json();
+  const data = await req.json();
 
   try {
-    const username = body.author.toLowerCase();
+    Session();
+
+    const username = data.author.toLowerCase();
     const user = await db.users.findUnique({ where: { username } });
 
-    // user not exist error
+    // user not exist
     if (!user) {
       return NextResponse.json(
         { message: "Nie znaleziono konta użytkownika" },
@@ -33,23 +33,14 @@ export async function POST(req: Request) {
       );
     }
 
-    // create new post
-    const newPost = await db.posts.create({
-      data: body,
-    });
-
-    // return success message
-    const { author: _, ...post } = newPost;
+    // new post
+    const post = await db.posts.create({ data });
 
     return NextResponse.json(
-      {
-        message: "Pomyślnie dodano nowy post",
-        post: { ...post, author: user.username },
-      },
+      { message: "Pomyślnie dodano nowy post", post },
       { status: 201 }
     );
   } catch (error) {
-    // return error message
     return NextResponse.json(
       { message: "Wystąpił nieoczekiwany błąd serwera", error },
       { status: 500 }
@@ -61,26 +52,17 @@ export async function DELETE(req: Request) {
   const { id } = await req.json();
 
   try {
-    // sign-in user authentication
-    const session = await auth();
-    if (!session) {
-      return NextResponse.json(
-        { message: "Nieuprawniony dostęp" },
-        { status: 401 }
-      );
-    }
+    Session();
 
-    // database update
-    await db.comments.deleteMany({ where: { postId: id } }); // delete all comments of post
-    await db.posts.delete({ where: { id } }); // delete post
+    // update database
+    const comments = await db.comments.deleteMany({ where: { postId: id } }); // delete all comments of post
+    const post = await db.posts.delete({ where: { id } }); // delete post
 
-    // return success message
     return NextResponse.json(
-      { message: "Pomyślnie usunięto post" },
+      { message: "Pomyślnie usunięto post", comments, post },
       { status: 200 }
     );
   } catch (error) {
-    // return error message
     return NextResponse.json(
       { message: "Wystąpił nieoczekiwany błąd serwera", error },
       { status: 500 }

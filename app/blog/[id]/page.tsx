@@ -73,19 +73,25 @@ export default async function PostPage({ params }: { params: { id: string } }) {
               <p className={styles.noComments}>Brak komentarzy</p>
             )}
 
-            {comments.map((comment, i) => (
-              <div key={i} id={comment.id}>
-                <div className={styles.comment}>
-                  <h3>
-                    {`@${comment.author} • `}
-                    <span>{date.format(comment.createdAt, pattern)}</span>
-                  </h3>
-                  <p>{comment.text}</p>
-                </div>
+            {comments.map((comment, i) => {
+              const commentAuthor = comment.author === user?.username;
 
-                {authorView && <DeleteComment id={comment.id} />}
-              </div>
-            ))}
+              return (
+                <div key={i} id={comment.id}>
+                  <div className={styles.comment}>
+                    <h3>
+                      {`@${comment.author} • `}
+                      <span>{date.format(comment.createdAt, pattern)}</span>
+                    </h3>
+                    <p>{comment.text}</p>
+                  </div>
+
+                  {(authorView || commentAuthor) && (
+                    <DeleteComment id={comment.id} />
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {user && <AddComment postId={post.id} author={user.username} />}

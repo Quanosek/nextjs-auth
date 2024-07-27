@@ -75,67 +75,78 @@
   gap: 8px;
 }
 
-.listElement {
-  $gap: 8px;
-
+.elementsList {
   width: 100%;
   display: flex;
   align-items: flex-start;
-  gap: calc($gap / 2);
+  gap: 4px;
+}
 
-  a {
-    padding: 1rem 1.5rem;
+.elementLink {
+  padding: 1rem 1.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  border-radius: 4px;
+  background-color: var(--button);
+  transition: 0.2s background-color ease-in-out;
+
+  &:hover {
+    background-color: var(--button-hover);
+  }
+
+  div {
     width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    border-radius: 4px;
-    background-color: var(--button);
-    transition: 0.2s background-color ease-in-out;
+    justify-content: space-between;
+    gap: 8px;
 
-    &:hover {
-      background-color: var(--button-hover);
-    }
+    h2 {
+      text-align: start;
 
-    div {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      gap: $gap;
-
-      h2 {
-        text-align: start;
-
-        display: -webkit-box;
-        line-clamp: 3;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-
-      p {
-        opacity: 80%;
-        font-size: 90%;
-        white-space: nowrap;
-      }
-    }
-
-    .text {
       display: -webkit-box;
-      line-clamp: 6;
-      -webkit-line-clamp: 6;
+      line-clamp: 3;
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
+
+    p {
+      opacity: 80%;
+      font-size: 90%;
+      white-space: nowrap;
+    }
   }
 
+  .text {
+    display: -webkit-box;
+    line-clamp: 6;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+.actions {
+  height: 100%;
+  width: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  a,
   button {
     $padding: 3px;
 
     opacity: 50%;
     padding: $padding;
-    height: 24px + 2 * $padding;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: 100%;
     aspect-ratio: 1/1;
     border-radius: 4px;
     background-color: transparent;
@@ -147,9 +158,8 @@
     }
 
     img {
-      height: 100%;
-      width: auto;
-      aspect-ratio: 1/1;
+      height: auto;
+      width: 100%;
     }
   }
 }

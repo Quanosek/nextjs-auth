@@ -38,8 +38,11 @@ export default async function ProfileCommentsPage() {
           });
 
           return (
-            <div key={i} className={styles.listElement}>
-              <Link href={`/blog/${comment.postId}#${comment.id}`}>
+            <div key={i} className={styles.elementsList}>
+              <Link
+                href={`/blog/${comment.postId}#${comment.id}`}
+                className={styles.elementLink}
+              >
                 <div>
                   <h2>{comment.text}</h2>
                   <p className={styles.date}>
@@ -54,7 +57,9 @@ export default async function ProfileCommentsPage() {
                 </p>
               </Link>
 
-              <DeleteComment id={comment.id} />
+              <div className={styles.actions}>
+                <DeleteComment id={comment.id} />
+              </div>
             </div>
           );
         })}

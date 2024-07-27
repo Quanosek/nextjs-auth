@@ -16,7 +16,7 @@ export default function PasswordInputComponent({
 
   const type = useRef("off");
   if (value === "newPassword") type.current = "new-password";
-  else if (value === "currentPassword" || "password") {
+  else if (value === "currentPassword" || value === "password") {
     type.current = "current-password";
   }
 

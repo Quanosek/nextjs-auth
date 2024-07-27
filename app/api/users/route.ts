@@ -1,16 +1,16 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/lib/auth";
 import db from "@/lib/db";
 import { hash } from "bcrypt";
+import Session from "@/lib/api/session";
 
 export async function POST(req: Request) {
-  const body = await req.json();
+  const data = await req.json();
 
   try {
-    const username = body.username.toLowerCase();
+    // username is taken
+    const username = data.username.toLowerCase();
     const existingUser = await db.users.findUnique({ where: { username } });
 
-    // user already exists error
     if (existingUser) {
       return NextResponse.json(
         { message: "Podana nazwa użytkownika jest już zajęta" },
@@ -18,14 +18,13 @@ export async function POST(req: Request) {
       );
     }
 
-    const password = await hash(body.password, 12); // secure password value
+    // secure password value
+    const password = await hash(data.password, 12);
 
     // create new user
-    const newUser = await db.users.create({
+    const { password: _, ...user } = await db.users.create({
       data: { username, password },
     });
-
-    const { password: _, ...user } = newUser;
 
     // return success message
     return NextResponse.json(
@@ -33,7 +32,6 @@ export async function POST(req: Request) {
       { status: 201 }
     );
   } catch (error) {
-    // return error message
     return NextResponse.json(
       { message: "Wystąpił nieoczekiwany błąd serwera", error },
       { status: 500 }
@@ -42,22 +40,15 @@ export async function POST(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  const body = await req.json();
+  const data = await req.json();
 
   try {
-    // sign-in user authentication
-    const session = await auth();
-    if (!session) {
-      return NextResponse.json(
-        { message: "Nieuprawniony dostęp" },
-        { status: 401 }
-      );
-    }
+    Session();
 
-    const username = body.username.toLowerCase();
+    // user not exist
+    const username = data.username.toLowerCase();
     const existingUser = await db.users.findUnique({ where: { username } });
 
-    // user not found error
     if (!existingUser) {
       return NextResponse.json(
         { message: "Nie znaleziono konta użytkownika" },
@@ -66,28 +57,30 @@ export async function DELETE(req: Request) {
     }
 
     // delete user comments
-    await db.comments.deleteMany({ where: { author: username } });
+    const comments = await db.comments.deleteMany({
+      where: { author: username },
+    });
 
     // delete comments under user posts
-    const posts = await db.posts.findMany({ where: { author: username } });
+    const userPosts = await db.posts.findMany({ where: { author: username } });
 
-    for (const post of posts) {
+    for (const post of userPosts) {
       await db.comments.deleteMany({ where: { postId: post.id } });
     }
 
     // delete user posts
-    await db.posts.deleteMany({ where: { author: username } });
+    const posts = await db.posts.deleteMany({ where: { author: username } });
 
     // delete user account
-    await db.users.delete({ where: { username } });
+    const { password: _, ...user } = await db.users.delete({
+      where: { username },
+    });
 
-    // return success message
     return NextResponse.json(
-      { message: "Pomyślnie usunięto konto" },
+      { message: "Pomyślnie usunięto konto", comments, posts, user },
       { status: 200 }
     );
   } catch (error) {
-    // return error message
     return NextResponse.json(
       { message: "Wystąpił nieoczekiwany błąd serwera", error },
       { status: 500 }

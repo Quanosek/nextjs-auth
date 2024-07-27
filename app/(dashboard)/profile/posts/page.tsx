@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import db from "@/lib/db";
@@ -36,8 +37,8 @@ export default async function ProfilePostsPage() {
           });
 
           return (
-            <div key={i} className={styles.listElement}>
-              <Link href={`/blog/${posts.id}#${posts.id}`}>
+            <div key={i} className={styles.elementsList}>
+              <Link href={`/blog/${posts.id}`} className={styles.elementLink}>
                 <div>
                   <h2>{posts.title}</h2>
                   <p className={styles.date}>
@@ -48,7 +49,19 @@ export default async function ProfilePostsPage() {
                 <p className={styles.text}>{post?.content}</p>
               </Link>
 
-              <DeletePost id={posts.id} />
+              <div className={styles.actions}>
+                <Link href={`/blog/${posts.id}/edit`}>
+                  <Image
+                    src="/icons/edit.svg"
+                    alt=""
+                    width={25}
+                    height={25}
+                    draggable={false}
+                  />
+                </Link>
+
+                <DeletePost id={posts.id} />
+              </div>
             </div>
           );
         })}

@@ -21,7 +21,6 @@ model Posts {
     id        String     @id @default(cuid())
     title     String
     content   String
-    image     String?
     User      Users      @relation(fields: [author], references: [username])
     author    String
     createdAt DateTime   @default(now())
