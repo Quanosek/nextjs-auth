@@ -59,7 +59,7 @@ export default function FormComponent() {
 
       if (loginResponse?.error) {
         reset({ password: "" });
-        toast.error("Niepoprawny adres e-mail lub hasło");
+        toast.error("Wprowadzono niepoprawny login lub hasło");
       } else {
         toast.success(`Witaj ponownie, @${username}!`);
         const redirect = localStorage.getItem("redirect");

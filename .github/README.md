@@ -1,43 +1,41 @@
 <h1>nextjs-auth</h1>
 
-###
-
 <div>
-  <img src="https://skillicons.dev/icons?i=react" height="45" alt="react logo"  />
-  <img width="12" />
-  <img src="https://skillicons.dev/icons?i=ts" height="45" alt="typescript logo"  />
-  <img width="12" />
-  <img src="https://skillicons.dev/icons?i=nodejs" height="45" alt="nodejs logo"  />
-  <img width="12" />
-  <img src="https://skillicons.dev/icons?i=nextjs" height="45" alt="nextjs logo"  />
-  <img width="12" />
-  <img src="https://skillicons.dev/icons?i=sass" height="45" alt="sass logo"  />
-  <img width="12" />
-  <img src="https://skillicons.dev/icons?i=prisma" height="45" alt="prisma logo"  />
-  <img width="12" />
-  <img src="https://skillicons.dev/icons?i=postgres" height="45" alt="postgresql logo"  />
+  <img alt="react" src="https://skillicons.dev/icons?i=react" height="45" />
+  <img width="10" />
+  <img alt="typescript" src="https://skillicons.dev/icons?i=ts" height="45" />
+  <img width="10" />
+  <img alt="nodejs" src="https://skillicons.dev/icons?i=nodejs" height="45" />
+  <img width="10" />
+  <img alt="nextjs" src="https://skillicons.dev/icons?i=nextjs" height="45" />
+  <img width="10" />
+  <img alt="sass" src="https://skillicons.dev/icons?i=sass" height="45" />
+  <img width="10" />
+  <img alt="prisma" src="https://skillicons.dev/icons?i=prisma" height="45" />
+  <img width="10" />
+  <img alt="postgresql" src="https://skillicons.dev/icons?i=postgres" height="45" />
 </div>
 
-###
-
-<p>Fullstack blog application created using Next.js v14 framework with connection to PostgreSQL Database using Prisma for user login/register server account authentication.</p>
-
-###
+<br />
 
 <div>
-  <img width="100%" src="./screenshot.webp"  />
+  <p>Fullstack blog application created using Next.js v14 framework with connection to PostgreSQL Database using Prisma for user login/register server account authentication.</p>
+
+  <ul>
+    <li>Using <a href="https://nextjs.org/docs">Next.js</a> framework with App Router ( /app )</li>
+    <li>Build by <a href="https://pnpm.io/">pnpm</a> package manager</li>
+  </ul>
 </div>
 
-###
+<br />
 
-- Using [Next.js](https://nextjs.org/docs) framework with App Router ( /app )
-- Build by [pnpm](https://pnpm.io/) package manager
+<img width="100%" src="./screenshot.webp" />
 
-###
-
-## At first run:
+<h2>At first run:</h2>
 
 Create new `.env` file and fill it in according to [example template](./example.env).
+
+<br />
 
 Install all packages and required dependencies:
 
@@ -69,16 +67,19 @@ in every change in database and prisma scheme run:
 pnpm exec prisma db push
 ```
 
-## Features:
+<h2>Features:</h2>
 
-- dynamically updating database content in real time
-- register and login forms with client and server validation
-- toast responsive prompts
-- adding, editing and deleting posts on blog page with saving to database
-- dedicated profile page for changing password, deleting account or log out from session
-- view of all of user posts and comments
+<ul>
+  <li>dynamically updating database content in real time</li>
+  <li>register and login forms with client and server validation</li>
+  <li>toast responsive prompts</li>
+  <li>adding, editing and deleting posts on blog page with saving to database</li>
+  <li>dedicated profile page for changing password, deleting account or log out from session</li>
+  <li>view of all of user posts and comments</li>
+</ul>
 
-## Support:
+<h2>Support:</h2>
+
 <a href="https://ko-fi.com/quanosek">
-    <img src="https://cdn.ko-fi.com/cdn/kofi3.png?v=3" height="50" width="210" alt="quanosek" />
+  <img src="https://cdn.ko-fi.com/cdn/kofi3.png?v=3" height="50" width="210" alt="quanosek" />
 </a>
